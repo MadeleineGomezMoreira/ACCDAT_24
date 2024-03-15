@@ -9,6 +9,8 @@ import java.util.List;
 public interface DaoPrescribedMedication {
     Either<AppError, List<PrescribedMedication>> getAll(PrescribedMedication medication);
 
+    Either<AppError, List<PrescribedMedication>> getAll();
+
     Either<AppError, Integer> save(PrescribedMedication medication);
 
     //delete medication by medicalRecordId

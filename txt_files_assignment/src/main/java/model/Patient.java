@@ -35,4 +35,12 @@ public class Patient {
                 this.birthDate + Constants.SEMICOLON +
                 this.phone;
     }
+
+    @Override
+    public String toString() {
+        return "\n" + "-- Patient --" +
+                "\n" + "| name: " + name +
+                "\n" + "| birthday: " + birthDate +
+                "\n" + "| phone: " + phone;
+    }
 }

@@ -14,6 +14,12 @@ public class Credential {
     private String username;
     private String password;
 
+    public Credential(String username, String password) {
+        this.id = 0;
+        this.username = username;
+        this.password = password;
+    }
+
     public Credential(String fileLine) {
         String[] data = fileLine.split(Constants.SEMICOLON);
         this.id = Integer.parseInt(data[0]);

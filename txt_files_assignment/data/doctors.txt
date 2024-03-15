@@ -1,0 +1,4 @@
+1;Marcos Vega;Cardiology;616280418
+2;Cristina Delgado;Neurology;623202514
+3;Pablo Nieto;Dermatology;675438409
+4;Salma Hita;Psychiatrist;673998271

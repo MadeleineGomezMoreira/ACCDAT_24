@@ -63,6 +63,43 @@ public class DaoPatientsImpl implements DaoPatients {
         return result;
     }
 
+    //get patient by id
+    @Override
+    public Either<AppError, Patient> get(Patient patient) {
+        Either<AppError, Patient> result;
+
+        Path file = Path.of(config.getPathPatients());
+        Patient patientToReturn = null;
+
+        if (!file.toFile().exists()) {
+            result = Either.left(new AppError(Constants.FILE_DOES_NOT_EXIST_ERROR));
+        } else {
+            try (BufferedReader br = Files.newBufferedReader(file)) {
+                String st;
+                if (Files.size(file) == 0) {
+                    result = Either.left(new AppError(Constants.DATA_RETRIEVAL_ERROR_NO_DATA));
+                } else {
+                    while ((st = br.readLine()) != null) {
+                        if (!st.trim().isEmpty()) {
+                            Patient newPatient = new Patient(st);
+                            if (newPatient.getId() == patient.getId()) {
+                                patientToReturn = newPatient;
+                            }
+                        }
+                    }
+                    if(patientToReturn == null) {
+                        result = Either.left(new AppError(Constants.DATA_RETRIEVAL_ERROR_NOT_FOUND));
+                    } else {
+                        result = Either.right(patientToReturn);
+                    }
+                }
+            } catch (Exception e) {
+                result = Either.left(new AppError(Constants.INTERNAL_ERROR));
+            }
+        }
+        return result;
+    }
+
     //delete patient
 
     @Override

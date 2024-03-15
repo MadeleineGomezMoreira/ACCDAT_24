@@ -28,12 +28,23 @@ public class MedicalRecord {
         this.admissionDate = LocalDate.parse(data[1]);
         this.diagnosis = data[2];
         this.patientId = Integer.parseInt(data[3]);
+        this.doctorId = Integer.parseInt(data[4]);
     }
 
     public String toStringTextFile(){
         return this.id + Constants.SEMICOLON +
                 this.admissionDate + Constants.SEMICOLON +
                 this.diagnosis + Constants.SEMICOLON +
-                this.patientId;
+                this.patientId + Constants.SEMICOLON +
+                this.doctorId;
+    }
+
+    @Override
+    public String toString() {
+        return "\n" + "-- MedicalRecord -- " +
+                "\n" + "| admissionDate: " + admissionDate +
+                "\n" + "| diagnosis: " + diagnosis +
+                "\n" + "| patientId: " + patientId +
+                "\n" + "| doctorId: " + doctorId;
     }
 }

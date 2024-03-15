@@ -15,6 +15,10 @@ public class Doctor {
     private String speciality;
     private String phone;
 
+    public Doctor(int id) {
+        this.id = id;
+    }
+
     public Doctor(String fileLine) {
         String[] data = fileLine.split(Constants.SEMICOLON);
         this.id = Integer.parseInt(data[0]);

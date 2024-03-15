@@ -1,0 +1,8 @@
+1;2024-03-01;headache;1;3
+2;2024-03-02;respiratory infection;2;4
+3;2024-03-03;neck eczema;3;2
+4;2024-03-04;broken arm;4;1
+5;2024-03-05;swollen eye;4;1
+6;2024-03-06;loss of hearing;3;2
+7;2024-03-07;sudden blindness;2;3
+8;2024-03-08;internal bleeding;1;4
