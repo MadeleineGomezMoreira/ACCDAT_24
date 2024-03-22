@@ -72,3 +72,13 @@ D
 :
 
 .gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
+S
+#src/main/java/ui/DeletePatient.java,3\9\39d89145f16b8c9d8753bd13e91f5c7c54d12596
+]
+-src/main/java/ui/methods/ShowAllPatients.java,a\1\a1828b23540b9e67ae2bd12e8cf17a9007a80486
+[
++src/main/java/ui/methods/DeletePatient.java,0\f\0f46081c626c0ea0add5b2b5aeae66d77420a5e7
+]
+-src/main/java/ui/methods/ShowMrByPatient.java,6\6\66eb99800791c7e93054cda11926f9cd8bf05c87
+f
+6src/main/java/ui/methods/SaveRecordWithMedication.java,0\e\0ed808bc7a559f0483692a5f3989db955d0500f1

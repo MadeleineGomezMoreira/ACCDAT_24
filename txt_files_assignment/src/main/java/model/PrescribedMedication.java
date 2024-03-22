@@ -33,4 +33,11 @@ public class PrescribedMedication {
                 this.dose + Constants.SEMICOLON +
                 this.medicalRecordId;
     }
+
+    @Override
+    public String toString() {
+        return "\n" + "-- MEDICATION --" +
+                "\n" + "Name: " + name +
+                "\n" + "Dose: " + dose;
+    }
 }

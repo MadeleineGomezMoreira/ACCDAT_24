@@ -1,4 +1,4 @@
-package ui;
+package ui.methods;
 
 import io.vavr.control.Either;
 import jakarta.inject.Inject;
@@ -40,6 +40,8 @@ public class SaveRecordWithMedication {
 
         if (either.isRight()) {
             System.out.println("Medical record added successfully!");
+            System.out.println(medicalRecordDTO);
+
         } else if (either.isLeft()) {
             System.out.println(either.getLeft().getMessage());
         }

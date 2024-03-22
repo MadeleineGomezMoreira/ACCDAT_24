@@ -5,10 +5,10 @@ import jakarta.enterprise.inject.se.SeContainer;
 import jakarta.enterprise.inject.se.SeContainerInitializer;
 import model.error.AppError;
 import services.LoginService;
-import ui.DeletePatient;
-import ui.SaveRecordWithMedication;
-import ui.ShowAllPatients;
-import ui.ShowMrByPatient;
+import ui.methods.DeletePatient;
+import ui.methods.SaveRecordWithMedication;
+import ui.methods.ShowAllPatients;
+import ui.methods.ShowMrByPatient;
 
 import java.util.Scanner;
 
@@ -23,9 +23,9 @@ public class MainHospital {
         LoginService service = container.select(LoginService.class).get();
 
         System.out.println("WELCOME TO THE HOSPITAL SYSTEM");
-        System.out.println("Please enter your username: ");
+        System.out.println("Please enter your username: (root)");
         String username = sc.nextLine();
-        System.out.println("Please enter your password: ");
+        System.out.println("Please enter your password: (2dam)");
         String password = sc.nextLine();
 
         Either<AppError, Boolean> loginResult = service.login(username, password);

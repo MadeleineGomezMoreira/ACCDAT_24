@@ -1,24 +1,24 @@
-package ui;
+package ui.methods;
 
 import io.vavr.control.Either;
 import jakarta.inject.Inject;
-import model.MedicalRecord;
+import model.Patient;
 import model.error.AppError;
-import services.MedicalRecordsService;
+import services.PatientsService;
 
 import java.util.List;
 
-public class ShowMrByPatient {
+public class ShowAllPatients {
 
-    private final MedicalRecordsService service;
+    private final PatientsService service;
 
     @Inject
-    public ShowMrByPatient(MedicalRecordsService service) {
+    public ShowAllPatients(PatientsService service) {
         this.service = service;
     }
 
-    public void showMrByPatient() {
-        Either<AppError, List<MedicalRecord>> either = service.getAll(1);
+    public void showAllPatients() {
+        Either<AppError, List<Patient>> either = service.getAll();
 
         if (either.isRight()) {
             System.out.println(either.get());
@@ -26,4 +26,5 @@ public class ShowMrByPatient {
             System.out.println(either.getLeft().getMessage());
         }
     }
+
 }

@@ -21,4 +21,13 @@ public class MedicalRecordDTO {
     private int doctorId;
     private List<PrescribedMedication> medicationList = new ArrayList<>();
 
+    @Override
+    public String toString() {
+        return "\n" + "-- MEDICAL RECORD --" +
+                "\n" + "Admission date: " + admissionDate +
+                "\n" + "Diagnosis: " + diagnosis +
+                "\n" + "Patient id: " + patientId +
+                "\n" + "Doctor id: " + doctorId +
+                "\n" + medicationList;
+    }
 }

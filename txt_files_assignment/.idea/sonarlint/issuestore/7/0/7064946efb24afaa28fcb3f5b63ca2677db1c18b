@@ -2,8 +2,8 @@
 E
 java:S5411%"(Use a primitive boolean expression here.(Ğğ˜İ8«ŸØïã1
 L	java:S106"+Replace this use of System.out by a logger.(Ä¾—©üÿÿÿÿ8³ŸØïã1
-L	java:S106"+Replace this use of System.out by a logger.(•ÿ¢Íşÿÿÿÿ8´ŸØïã1
-L	java:S106"+Replace this use of System.out by a logger.(à±íİıÿÿÿÿ8´ŸØïã1
+G	java:S106"+Replace this use of System.out by a logger.(üô“ö8´ŸØïã1
+G	java:S106"+Replace this use of System.out by a logger.(Òü‰¦8´ŸØïã1
 L	java:S106&"+Replace this use of System.out by a logger.(‰œø©ıÿÿÿÿ8µŸØïã1
 G	java:S106-"+Replace this use of System.out by a logger.(Îñë8·ŸØïã1
 L	java:S106;"+Replace this use of System.out by a logger.(¬Ğ§¡ûÿÿÿÿ8·ŸØïã1
