@@ -1,0 +1,35 @@
+DOCTORS
+
+1;Marcos Vega;Cardiology;616280418
+2;Cristina Delgado;Neurology;623202514
+3;Pablo Nieto;Dermatology;675438409
+4;Salma Hita;Psychiatrist;673998271
+
+PATIENTS
+
+1;Gloria Hanks;1970-09-01;677293710
+2;Carrie Smith;2001-10-10;653928111
+3;Thomas Brim;1999-03-14;677922361
+4;Fran Cliff;2002-01-11;699826134
+
+MEDICAL RECORDS
+
+1;2024-03-01;headache;1;3
+2;2024-03-02;respiratory infection;2;4
+3;2024-03-03;neck eczema;3;2
+4;2024-03-04;broken arm;4;1
+5;2024-03-05;swollen eye;4;1
+6;2024-03-06;loss of hearing;3;2
+7;2024-03-07;sudden blindness;2;3
+8;2024-03-08;internal bleeding;1;4
+
+PRESCRIBED MEDICATION
+
+1;Lorazepam;5mg;1
+2;Prednisone;10mg;2
+3;Meloxicam;5mg;3
+4;Benadryl;10mg;4
+5;Trazodone;20mg;5
+6;Diazepam;5mg;6
+7;Prednisone;10mg;7
+8;Benadryl;15mg;8

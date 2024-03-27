@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+    <entry key="pathPatients">data/patients.txt</entry>
+    <entry key="pathDoctors">data/doctors.txt</entry>
+    <entry key="pathMedicalRecords">data/medicalRecords.txt</entry>
+    <entry key="pathPrescribedMedication">data/prescribedMedication.txt</entry>
+
+</properties>

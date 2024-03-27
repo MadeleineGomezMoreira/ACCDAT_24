@@ -1,0 +1,8 @@
+1;Lorazepam;5mg;1
+2;Prednisone;10mg;2
+3;Meloxicam;5mg;3
+4;Benadryl;10mg;4
+5;Trazodone;20mg;5
+6;Diazepam;5mg;6
+7;Prednisone;10mg;7
+8;Benadryl;15mg;8
