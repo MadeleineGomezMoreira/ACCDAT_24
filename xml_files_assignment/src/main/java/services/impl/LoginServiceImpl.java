@@ -1,6 +1,6 @@
 package services.impl;
 
-import dao.DaoLogin;
+import dao.txt.DaoLogin;
 import io.vavr.control.Either;
 import jakarta.inject.Inject;
 import model.Credential;

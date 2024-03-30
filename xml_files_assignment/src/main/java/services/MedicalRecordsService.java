@@ -13,4 +13,7 @@ public interface MedicalRecordsService {
 
     //save medical record with medications
     Either<AppError, Integer> save(MedicalRecordDTO medRecord);
+
+    //save medical record to XML file
+    Either<AppError, Integer> saveXML(MedicalRecordDTO medRecord);
 }

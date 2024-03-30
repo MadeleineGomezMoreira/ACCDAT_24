@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -21,7 +22,7 @@ public class PatientXML {
     private LocalDate birthDate;
     private String phone;
 
-    @XmlElement(name = "medical_record")
-    private List<MedicalRecordXML> medicalRecords;
+    @XmlElement(name = "medical_records")
+    private MedicalRecordsXML medicalRecords;
 
 }

@@ -20,6 +20,7 @@ public class Configuration {
     private String pathDoctors;
     private String pathMedicalRecords;
     private String pathPrescribedMedication;
+    private String pathXML;
 
     public Configuration() {
         try {
@@ -29,6 +30,7 @@ public class Configuration {
             this.pathDoctors = properties.getProperty(Constants.PATH_DOCTORS);
             this.pathMedicalRecords = properties.getProperty(Constants.PATH_MEDICAL_RECORDS);
             this.pathPrescribedMedication = properties.getProperty(Constants.PATH_PRESCRIBED_MEDICATION);
+            this.pathXML = properties.getProperty(Constants.PATH_XML);
         } catch (IOException ex) {
             log.error(ex.getMessage(), ex);
         }

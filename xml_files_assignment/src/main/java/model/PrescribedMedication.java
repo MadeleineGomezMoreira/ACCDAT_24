@@ -27,6 +27,11 @@ public class PrescribedMedication {
         this.medicalRecordId = Integer.parseInt(data[3]);
     }
 
+    public PrescribedMedication(String name, String dose) {
+        this.name = name;
+        this.dose = dose;
+    }
+
     public String toStringTextFile() {
         return this.id + Constants.SEMICOLON +
                 this.name + Constants.SEMICOLON +

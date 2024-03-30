@@ -5,5 +5,5 @@
     <entry key="pathDoctors">data/doctors.txt</entry>
     <entry key="pathMedicalRecords">data/medicalRecords.txt</entry>
     <entry key="pathPrescribedMedication">data/prescribedMedication.txt</entry>
-
+    <entry key="pathXML">data/patients.xml</entry>
 </properties>

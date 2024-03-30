@@ -10,6 +10,7 @@ public class Constants {
     public static final String PATH_DOCTORS = "pathDoctors";
     public static final String PATH_MEDICAL_RECORDS = "pathMedicalRecords";
     public static final String PATH_PRESCRIBED_MEDICATION = "pathPrescribedMedication";
+    public static final String PATH_XML = "pathXML";
 
     //PROPERTIES FILE PATH
     public static final String CONFIG_FILE_PATH = "config/config.properties";
@@ -25,6 +26,7 @@ public class Constants {
     public static final String SEMICOLON = ";";
     public static final String COMMA = ",";
     public static final String BLANK_SPACE = " ";
+    public static final String EMPTY_STRING = "";
 
     //ERROR MESSAGES
     public static final String DOCTOR_OR_PATIENT_DO_NOT_EXIST_ERROR = "The patient or doctor do not exist";
@@ -33,4 +35,6 @@ public class Constants {
     public static final String DATA_RETRIEVAL_ERROR_NO_DATA = "There is no data available";
     public static final String INTERNAL_ERROR = "There was an internal error";
     public static final String PATIENT_HAS_MEDICATION_ASSOCIATED_TO_MEDICAL_RECORDS_ERROR = "The patient has medication associated to their medical records and cannot be deleted";
+    public static final String ERROR_READING_XML = "There was an error while reading the xml.";
+    public static final String ERROR_WRITING_XML = "There was an error while writing the xml.";
 }
