@@ -38,6 +38,7 @@ public class MedicalRecordsServiceImpl implements MedicalRecordsService {
         return daoMedicalRecords.getAll(new MedicalRecord(patientId));
     }
 
+    //TODO: delete medical record even when patient has no prescribed medications
     //save medical record with medications
     @Override
     public Either<AppError, Integer> save(MedicalRecordDTO medRecord) {

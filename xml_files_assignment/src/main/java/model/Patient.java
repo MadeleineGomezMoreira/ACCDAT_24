@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -19,6 +20,10 @@ public class Patient {
 
     public Patient(int id) {
         this.id = id;
+    }
+
+    public Patient(List<String> string) {
+        this.name = string.get(0);
     }
 
     public Patient(String fileLine) {

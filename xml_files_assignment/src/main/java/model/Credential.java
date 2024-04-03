@@ -20,16 +20,5 @@ public class Credential {
         this.password = password;
     }
 
-    public Credential(String fileLine) {
-        String[] data = fileLine.split(Constants.SEMICOLON);
-        this.id = Integer.parseInt(data[0]);
-        this.username = data[1];
-        this.password = data[2];
-    }
 
-    public String toStringTextFile() {
-        return this.id + Constants.SEMICOLON +
-                this.username + Constants.SEMICOLON +
-                this.password;
-    }
 }

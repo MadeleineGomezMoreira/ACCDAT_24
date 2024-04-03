@@ -26,6 +26,8 @@ public class SaveRecordWithMedication {
                 new PrescribedMedication(2, "Acetaminophen", "500gm", 9)
         );
 
+        //TODO: cambiar lo del id para que se genere siempre el último ID en el servicio
+
         MedicalRecordDTO medicalRecordDTO =
                 new MedicalRecordDTO(
                         9,

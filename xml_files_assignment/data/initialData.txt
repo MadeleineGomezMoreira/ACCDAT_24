@@ -33,3 +33,146 @@ PRESCRIBED MEDICATION
 6;Diazepam;5mg;6
 7;Prednisone;10mg;7
 8;Benadryl;15mg;8
+
+XML
+<patients>
+    <patient>
+        <id>1</id>
+        <name>Gloria Hanks</name>
+        <birth_date>1970-09-01</birth_date>
+        <phone>677293710</phone>
+        <medical_records>
+            <medical_record>
+                <admission_date>2024-03-01</admission_date>
+                <diagnosis>headache</diagnosis>
+                <doctor>3</doctor>
+                <medication>
+                    <prescribed_medication>
+                        <name>Lorazepam</name>
+                        <dosage>5mg</dosage>
+                    </prescribed_medication>
+                </medication>
+            </medical_record>
+            <medical_record>
+                <admission_date>2024-03-08</admission_date>
+                <diagnosis>internal bleeding</diagnosis>
+                <doctor>4</doctor>
+                <medication>
+                    <prescribed_medication>
+                        <name>Benadryl</name>
+                        <dosage>15mg</dosage>
+                    </prescribed_medication>
+                </medication>
+            </medical_record>
+        </medical_records>
+    </patient>
+    <patient>
+        <id>2</id>
+        <name>Carrie Smith</name>
+        <birth_date>2001-10-10</birth_date>
+        <phone>653928111</phone>
+        <medical_records>
+            <medical_record>
+                <admission_date>2024-03-02</admission_date>
+                <diagnosis>respiratory infection</diagnosis>
+                <doctor>4</doctor>
+                <medication>
+                    <prescribed_medication>
+                        <name>Prednisone</name>
+                        <dosage>10mg</dosage>
+                    </prescribed_medication>
+                </medication>
+            </medical_record>
+            <medical_record>
+                <admission_date>2024-03-07</admission_date>
+                <diagnosis>sudden blindness</diagnosis>
+                <doctor>3</doctor>
+                <medication>
+                    <prescribed_medication>
+                        <name>Prednisone</name>
+                        <dosage>10mg</dosage>
+                    </prescribed_medication>
+                </medication>
+            </medical_record>
+        </medical_records>
+    </patient>
+    <patient>
+        <id>3</id>
+        <name>Thomas Brim</name>
+        <birth_date>1999-03-14</birth_date>
+        <phone>677922361</phone>
+        <medical_records>
+            <medical_record>
+                <admission_date>2024-03-03</admission_date>
+                <diagnosis>neck eczema</diagnosis>
+                <doctor>2</doctor>
+                <medication>
+                    <prescribed_medication>
+                        <name>Meloxicam</name>
+                        <dosage>5mg</dosage>
+                    </prescribed_medication>
+                </medication>
+            </medical_record>
+            <medical_record>
+                <admission_date>2024-03-06</admission_date>
+                <diagnosis>loss of hearing</diagnosis>
+                <doctor>2</doctor>
+                <medication>
+                    <prescribed_medication>
+                        <name>Diazepam</name>
+                        <dosage>5mg</dosage>
+                    </prescribed_medication>
+                </medication>
+            </medical_record>
+        </medical_records>
+    </patient>
+    <patient>
+        <id>4</id>
+        <name>Fran Cliff</name>
+        <birth_date>2002-01-11</birth_date>
+        <phone>699826134</phone>
+        <medical_records>
+            <medical_record>
+                <admission_date>2024-03-04</admission_date>
+                <diagnosis>broken arm</diagnosis>
+                <doctor>1</doctor>
+                <medication>
+                    <prescribed_medication>
+                        <name>Benadryl</name>
+                        <dosage>10mg</dosage>
+                    </prescribed_medication>
+                </medication>
+            </medical_record>
+            <medical_record>
+                <admission_date>2024-03-05</admission_date>
+                <diagnosis>swollen eye</diagnosis>
+                <doctor>1</doctor>
+                <medication>
+                    <prescribed_medication>
+                        <name>Trazodone</name>
+                        <dosage>20mg</dosage>
+                    </prescribed_medication>
+                </medication>
+            </medical_record>
+        </medical_records>
+    </patient>
+    <patient>
+        <id>5</id>
+        <name>Ronald Brake</name>
+        <birth_date>2002-01-11</birth_date>
+        <phone>699826134</phone>
+        <medical_records>
+            <medical_record>
+                <admission_date>2024-03-11</admission_date>
+                <diagnosis>concussion</diagnosis>
+                <doctor>3</doctor>
+            </medical_record>
+        </medical_records>
+    </patient>
+    <patient>
+        <id>6</id>
+        <name>Ronald Brake</name>
+        <birth_date>2002-01-11</birth_date>
+        <phone>699826134</phone>
+    </patient>
+</patients>

@@ -17,7 +17,9 @@ import model.xml.PatientsXML;
 
 import java.io.File;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Log4j2
 public class DaoPatientImpl implements DaoPatient {
@@ -31,9 +33,10 @@ public class DaoPatientImpl implements DaoPatient {
 
     @Override
     public Either<AppError, List<PatientXML>> getAll(Patient patient) {
-        String medicationName = patient.getName();
 
-        if (!medicationName.isBlank()) {
+
+        if (patient.getName() != null) {
+            String medicationName = patient.getName();
             return readXML(medicationName, false).flatMap(patientsXML -> {
                         if (patientsXML.getPatients().isEmpty()) {
                             return Either.left(new AppError(Constants.DATA_RETRIEVAL_ERROR_NOT_FOUND));
@@ -70,31 +73,45 @@ public class DaoPatientImpl implements DaoPatient {
 
             List<PatientXML> patientXMLList = patientsXML.getPatients();
 
-            boolean hasPrescribedMedication = patientXMLList.stream()
+            Optional<PatientXML> patientOptional = patientXMLList.stream()
                     .filter(patientXML -> patientXML.getId() == patientId)
-                    .flatMap(patientXML -> patientXML.getMedicalRecords().getMedicalRecords().stream())
-                    .anyMatch(medicalRecordXML -> !medicalRecordXML.getPrescribedMedication().getPrescribedMedication().isEmpty());
+                    .findFirst();
 
-            if (hasPrescribedMedication && !confirmed) {
-                return Either.left(new AppError(Constants.PATIENT_HAS_MEDICATION_ASSOCIATED_TO_MEDICAL_RECORDS_ERROR));
-            }
+            if (patientOptional.isPresent()) {
+                PatientXML patientXML = patientOptional.get();
 
-            List<PatientXML> updatedPatientList = patientXMLList.stream()
-                    .filter(patientXML -> patientXML.getId() != patientId)
-                    .collect(Collectors.toList());
+                if (patientXML.getMedicalRecords() != null) {
+                    //check if prescribed medication is null for the patient
+                    AtomicBoolean patientHasMedication = new AtomicBoolean(false);
 
-            patientsXML.setPatients(updatedPatientList);
+                    patientXML.getMedicalRecords().getMedicalRecords().forEach(medicalRecordXML -> {
+                        if (medicalRecordXML.getPrescribedMedication() != null) {
+                            patientHasMedication.set(true);
+                        }
+                    });
 
-            Either<AppError, Integer> writeResult = writeXML(patientsXML);
+                    if (patientHasMedication.get() && !confirmed) {
+                        return Either.left(new AppError(Constants.PATIENT_HAS_MEDICATION_ASSOCIATED_TO_MEDICAL_RECORDS_ERROR));
+                    }
+                }
 
-            if (writeResult.isLeft()) {
-                return writeResult;
-            }
+                List<PatientXML> updatedPatientList = patientXMLList.stream()
+                        .filter(patientToDelete -> patientToDelete.getId() != patientId)
+                        .toList();
 
-            return Either.right(1);
+                patientsXML.setPatients(updatedPatientList);
+
+                Either<AppError, Integer> writeResult = writeXML(patientsXML);
+
+                if (writeResult.isLeft()) {
+                    return writeResult;
+                }
+
+                return Either.right(1);
+
+            } else return Either.left(new AppError(Constants.DATA_RETRIEVAL_ERROR_NOT_FOUND));
         });
     }
-
 
     private Either<AppError, PatientsXML> readXML(String medicationName, boolean allPatients) {
         Either<AppError, PatientsXML> result;
@@ -118,14 +135,14 @@ public class DaoPatientImpl implements DaoPatient {
                                     medRecord -> medRecord.getPrescribedMedication().getPrescribedMedication().stream().anyMatch(
                                             medication -> medication.getName().equals(medicationName)
                                     )
-                            )).collect(Collectors.toList());
+                            )).toList();
                 } else {
                     matchingPatients = initialList.getPatients();
                 }
 
                 patients.setPatients(matchingPatients);
 
-                if (patients.getPatients().isEmpty()) {
+                if (patients.getPatients() == null) {
                     result = Either.left(new AppError(Constants.DATA_RETRIEVAL_ERROR_NO_DATA));
                 } else {
                     result = Either.right(patients);

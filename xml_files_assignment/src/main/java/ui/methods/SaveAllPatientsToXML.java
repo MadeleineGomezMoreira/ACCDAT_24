@@ -5,7 +5,7 @@ import jakarta.inject.Inject;
 import model.error.AppError;
 import services.PatientsService;
 
-public class SaveAllPatientsToXML {
+public class SaveAllPatientsToXML { //TODO: birthDate is not saving correctly
 
     private final PatientsService patientsService;
 

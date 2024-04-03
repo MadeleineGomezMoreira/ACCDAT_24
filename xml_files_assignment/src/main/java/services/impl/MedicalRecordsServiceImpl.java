@@ -85,6 +85,8 @@ public class MedicalRecordsServiceImpl implements MedicalRecordsService {
         Either<AppError, Doctor> doctorExists = daoDoctors.get(new Doctor(medRecord.getDoctorId()));
         Either<AppError, Patient> patientExists = daoPatients.get(new Patient(medRecord.getPatientId()));
 
+        assignLastId(medRecord);
+
         //check if doctor and patient exist first
         if (doctorExists.isLeft() || patientExists.isLeft()) {
             result = Either.left(new AppError(Constants.DOCTOR_OR_PATIENT_DO_NOT_EXIST_ERROR));
@@ -108,6 +110,14 @@ public class MedicalRecordsServiceImpl implements MedicalRecordsService {
             }
         }
         return result;
+    }
+
+    private void assignLastId(MedicalRecordDTO medicalRecord) {
+        medicalRecord.setId(daoMedicalRecords.getAll().get().stream().mapToInt(MedicalRecord::getId).max().orElse(0) + 1);
+        List<PrescribedMedication>  medicationList = medicalRecord.getMedicationList();
+        for (PrescribedMedication medication : medicationList) {
+            medication.setId(daoPrescribedMedications.getAll().get().stream().mapToInt(PrescribedMedication::getId).max().orElse(0) + 1);
+        }
     }
 
 

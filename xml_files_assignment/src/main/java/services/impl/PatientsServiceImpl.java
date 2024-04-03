@@ -11,9 +11,10 @@ import model.MedicalRecord;
 import model.Patient;
 import model.PrescribedMedication;
 import model.error.AppError;
-import model.xml.PatientXML;
+import model.xml.*;
 import services.PatientsService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PatientsServiceImpl implements PatientsService {
@@ -90,7 +91,7 @@ public class PatientsServiceImpl implements PatientsService {
     @Override
     public Either<AppError, List<Patient>> getPatientsByMedication(String medicationName) {
         Either<AppError, List<Patient>> result;
-        Either<AppError, List<PatientXML>> either = daoPatient.getAll(new Patient(medicationName));
+        Either<AppError, List<PatientXML>> either = daoPatient.getAll(new Patient(List.of(medicationName)));
         if (either.isRight()) {
             result = fromXML(either.get());
         } else {
@@ -102,11 +103,12 @@ public class PatientsServiceImpl implements PatientsService {
     @Override
     public Either<AppError, Integer> writeAllPatientsInXML() {
         Either<AppError, Integer> result;
-        Either<AppError, List<PatientXML>> allPatientsEither = daoPatient.getAll(new Patient(""));
-        if (allPatientsEither.isRight()) {
-            result = daoPatient.saveAll(allPatientsEither.get());
+        Either<AppError, List<PatientXML>> allPatientsEitherXML = daoPatient.getAll(new Patient());
+        Either<AppError, List<Patient>> allPatientsEither = daoPatients.getAll();
+        if (allPatientsEitherXML.isLeft()) {
+            result = daoPatient.saveAll(toXML(allPatientsEither.get()));
         } else {
-            result = Either.left(allPatientsEither.getLeft());
+            result = Either.left(new AppError(Constants.DATA_IS_ALREADY_STORED_IN_XML_FILE_ERROR));
         }
         return result;
     }
@@ -125,6 +127,53 @@ public class PatientsServiceImpl implements PatientsService {
         } else {
             return Either.right(patientList);
         }
+    }
+
+    private List<PatientXML> toXML(List<Patient> patientList) {
+        List<PatientXML> patientXMLList = new ArrayList<>();
+
+        for (Patient patient : patientList) {
+            List<MedicalRecordXML> medicalRecordsXML = new ArrayList<>();
+
+            List<MedicalRecord> medicalRecords = daoMedicalRecords.getAll(new MedicalRecord(patient.getId())).getOrNull();
+            if (medicalRecords != null) {
+                for (MedicalRecord medicalRecord : medicalRecords) {
+                    List<PrescribedMedicationXML> prescribedMedicationsXML = new ArrayList<>();
+
+                    List<PrescribedMedication> prescribedMedications = daoPrescribedMedications.getAll(new PrescribedMedication(medicalRecord.getId())).getOrNull();
+                    if (prescribedMedications != null) {
+                        for (PrescribedMedication prescribedMedication : prescribedMedications) {
+                            // Create PrescribedMedicationXML objects and add them to the list
+                            prescribedMedicationsXML.add(new PrescribedMedicationXML(
+                                    prescribedMedication.getName(),
+                                    prescribedMedication.getDose()
+                            ));
+                        }
+                    }
+
+                    MedicalRecordXML medicalRecordXML = new MedicalRecordXML(
+                            medicalRecord.getAdmissionDate(),
+                            medicalRecord.getDiagnosis(),
+                            String.valueOf(medicalRecord.getDoctorId()),
+                            new PrescribedMedicationsXML(prescribedMedicationsXML)
+                    );
+
+                    medicalRecordsXML.add(medicalRecordXML);
+                }
+            }
+
+            PatientXML patientXML = new PatientXML(
+                    patient.getId(),
+                    patient.getName(),
+                    patient.getBirthDate(),
+                    patient.getPhone(),
+                    new MedicalRecordsXML(medicalRecordsXML)
+            );
+
+            patientXMLList.add(patientXML);
+        }
+
+        return patientXMLList;
     }
 
     private Either<AppError, Integer> checkPrescribedMedication(List<MedicalRecord> medicalRecords) {

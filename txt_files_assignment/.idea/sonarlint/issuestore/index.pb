@@ -55,25 +55,17 @@ O
 src/main/java/dao/DaoLogin.java,8\7\87d42a8a6967e707d6c44eb756c4666397d7a7d2
 X
 (src/main/java/services/LoginService.java,d\0\d04008efde5f0ba19639262bdcc52551651b692e
-U
-%src/main/java/ui/ShowAllPatients.java,2\8\2837e3af9acd2767c1736b7dc86b25134ec16575
 W
 'src/main/java/ui/main/MainHospital.java,7\0\7064946efb24afaa28fcb3f5b63ca2677db1c18b
 a
 1src/main/java/services/MedicalRecordsService.java,3\4\34992baf69a96f08f2b607a85b541a357f73ff49
 [
 +src/main/java/services/PatientsService.java,0\7\077bbf488d20a98a3fd53a52d8421ef44567c9e0
-U
-%src/main/java/ui/ShowMrByPatient.java,a\3\a371fc283f106bf26408e14325e104c05362b3cb
 D
 data/initialData.txt,4\1\41834efb438eea2d6f8eb817738d2ab31a805109
-^
-.src/main/java/ui/SaveRecordWithMedication.java,0\2\024c28b00dbe36744b76c6e74f888cee02814626
 :
 
 .gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
-S
-#src/main/java/ui/DeletePatient.java,3\9\39d89145f16b8c9d8753bd13e91f5c7c54d12596
 ]
 -src/main/java/ui/methods/ShowAllPatients.java,a\1\a1828b23540b9e67ae2bd12e8cf17a9007a80486
 [

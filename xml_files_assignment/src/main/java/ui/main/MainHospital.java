@@ -5,10 +5,7 @@ import jakarta.enterprise.inject.se.SeContainer;
 import jakarta.enterprise.inject.se.SeContainerInitializer;
 import model.error.AppError;
 import services.LoginService;
-import ui.methods.DeletePatient;
-import ui.methods.SaveRecordWithMedication;
-import ui.methods.ShowAllPatients;
-import ui.methods.ShowMrByPatient;
+import ui.methods.*;
 
 import java.util.Scanner;
 
@@ -43,13 +40,17 @@ public class MainHospital {
 
                     //MENU
                     System.out.println("""
-                        MENU:\s
-                        1. Show all patients
-                        2. Show medical records by patient
-                        3. Append a new medical record with medication
-                        4. Delete a patient
-                        5. Exit
-                        """);
+                            MENU:\s
+                            1. Show all patients (txt)
+                            2. Show medical records by patient (txt)
+                            3. Append a new medical record with medication (txt)
+                            4. Delete a patient (txt)
+                            5. Save all patients to XML (xml)
+                            6. Append a new medical record with medication (txt)
+                            7. Delete a patient (xml)
+                            8. Show patients medicated with a specific medicine (xml)
+                            9. Exit
+                            """);
 
                     int choice = sc.nextInt();
                     sc.nextLine();
@@ -76,6 +77,22 @@ public class MainHospital {
                             deletePatient.deletePatient();
                             break;
                         case 5:
+                            SaveAllPatientsToXML saveAllPatientsToXML = container.select(SaveAllPatientsToXML.class).get();
+                            saveAllPatientsToXML.savePatientsToXML();
+                            break;
+                        case 6:
+                            SaveRecordWithMedicationToXML saveRecordWithMedicationToXML = container.select(SaveRecordWithMedicationToXML.class).get();
+                            saveRecordWithMedicationToXML.saveRecordWithMedication();
+                            break;
+                        case 7:
+                            DeletePatientInXML deletePatientInXML = container.select(DeletePatientInXML.class).get();
+                            deletePatientInXML.deletePatient();
+                            break;
+                        case 8:
+                            ShowPatientByMedicationXML showPatientByMedicationXML = container.select(ShowPatientByMedicationXML.class).get();
+                            showPatientByMedicationXML.showPatientByMedication();
+                            break;
+                        case 9:
                             System.out.println("Exiting...");
                             exit = true;
                             break;
