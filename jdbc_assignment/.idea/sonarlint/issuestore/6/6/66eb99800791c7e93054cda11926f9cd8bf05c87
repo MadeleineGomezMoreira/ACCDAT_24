@@ -1,0 +1,12 @@
+
+F	java:S106"+Replace this use of System.out by a logger.(µØˆ^8¦Éãì1
+G	java:S106"+Replace this use of System.out by a logger.(öŸ—8©Éãì1
+G	java:S106"+Replace this use of System.out by a logger.(öŸ—8©Éãì1
+P
+java:S1128"3Remove this unused import 'io.vavr.control.Either'.(÷¿œ’8€íåì1
+M
+java:S1128"0Remove this unused import 'model.MedicalRecord'.(îƒœ—8€íåì1
+S
+java:S1128"1Remove this unused import 'model.error.AppError'.(ıãÿÓıÿÿÿÿ8€íåì1
+M
+java:S1128	"+Remove this unused import 'java.util.List'.(Õë±Äøÿÿÿÿ8€íåì1

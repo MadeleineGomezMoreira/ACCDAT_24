@@ -15,7 +15,7 @@
     </properties>
 
     <dependencies>
-        <!-- BASE DEPENDENCIES (txt-xml) -->
+        <!-- BASE DEPENDENCIES () -->
         <!-- LOMBOK -->
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -40,24 +40,12 @@
             <artifactId>log4j-core</artifactId>
             <version>2.23.1</version>
         </dependency>
-        <!-- JAKARTA XML BIND API -->
-        <dependency>
-            <groupId>jakarta.xml.bind</groupId>
-            <artifactId>jakarta.xml.bind-api</artifactId>
-            <version>4.0.0</version>
-        </dependency>
-        <!-- JAXB -->
-        <dependency>
-            <groupId>org.glassfish.jaxb</groupId>
-            <artifactId>jaxb-runtime</artifactId>
-            <version>4.0.0</version>
-        </dependency>
         <!-- BASE DEPENDENCIES (JDBC) -->
         <!-- HIKARI CP -->
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
-            <version>5.0.0</version>
+            <version>5.1.0</version>
         </dependency>
         <!-- MYSQL CONNECTOR -->
         <dependency>
@@ -65,6 +53,7 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.30</version>
         </dependency>
+
     </dependencies>
 
 
