@@ -24,6 +24,8 @@ public class SaveRecordWithMedication {
 
         Scanner sc = new Scanner(System.in);
 
+        //show the error message if the user inputs non existent doctor/patient id
+
         System.out.println("Please input the patient's id:");
         int patientId = sc.nextInt();
         sc.nextLine();
@@ -32,15 +34,15 @@ public class SaveRecordWithMedication {
         sc.nextLine();
 
         List<PrescribedMedication> medicationList = List.of(
-                new PrescribedMedication(0, "Morphine", "10mg", 0),
-                new PrescribedMedication(0, "Oxycontin", "20gm", 0)
+                new PrescribedMedication(0, "Ibuprofen", "10mg", 0),
+                new PrescribedMedication(0, "Benadryl", "20gm", 0)
         );
 
         MedicalRecord medicalRecord =
                 new MedicalRecord(
                         0,
                         LocalDate.now(),
-                        "concussion",
+                        "headache",
                         patientId,
                         doctorId,
                         medicationList

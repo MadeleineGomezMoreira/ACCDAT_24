@@ -11,6 +11,8 @@ import ui.methods.*;
 
 import java.util.Scanner;
 
+//show medical r by patient (show all patients (each has a mr))
+
 public class MainHospital {
     public static void main(String[] args) {
 
