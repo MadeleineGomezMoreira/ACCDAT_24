@@ -14,7 +14,7 @@ public class QueryStrings {
     public static final String DELETE_PAYMENTS_BY_PATIENT_ID = "DELETE FROM payments WHERE id_patient = ?";
     public static final String DELETE_APPOINTMENTS_BY_PATIENT_ID = "DELETE FROM appointments WHERE id_patient = ?";
     public static final String DELETE_PATIENT_BY_ID = "DELETE FROM patients WHERE id = ?";
-    public static final String GET_PATIENT_BY_ID = "SELECT FROM patients WHERE id = ?";
+    public static final String GET_PATIENT_BY_ID = "SELECT * FROM patients WHERE id = ?";
     public static final String DELETE_MEDICAL_RECORDS_BY_PATIENT_ID = "DELETE FROM medical_records WHERE id_patient = ?";
     public static final String SELECT_PRESCRIBED_MEDICATION_BY_PATIENT_ID = "SELECT * FROM prescribed_medication pm JOIN medical_records mr ON pm.id_medical_record = mr.id WHERE mr.id_patient = ?";
     public static final String DELETE_PRESCRIBED_MEDICATION_BY_PATIENT_ID = "DELETE FROM prescribed_medication WHERE id_medical_record IN(SELECT mr.id FROM medical_records mr WHERE mr.id_patient = ?)";
@@ -31,6 +31,8 @@ public class QueryStrings {
     public static final String GET_NEWEST_MEDICAL_RECORD_BY_PATIENT_ID = "SELECT * FROM medical_records WHERE id_patient = ? ORDER BY admission_date DESC LIMIT 1";
     public static final String UPDATE_PRESCRIBED_MEDICATION_DOSE_BY_ID = "UPDATE prescribed_medication SET dose = ? WHERE id = ?";
     public static final String GET_ALL_MEDICAL_RECORDS = "SELECT * FROM medical_records";
+    public static final String GET_NAMES_OF_PATIENTS_MEDICATED_WITH_400_MG_IBUPROFEN = "SELECT DISTINCT p.name FROM patients p JOIN medical_records mr ON p.id = mr.id_patient JOIN prescribed_medication pm ON mr.id = pm.id_medical_record WHERE pm.name = 'Ibuprofen' AND pm.dose = '400mg'";
+    public static final String GET_NAME_AND_TOTAL_PRESCRIBED_MEDICATIONS_OF_PATIENT = "SELECT p.name, COUNT(pm.id) as medication_amount FROM patients p JOIN medical_records mr ON p.id = mr.id_patient JOIN prescribed_medication pm ON mr.id = pm.id_medical_record GROUP BY p.id";
 
     private QueryStrings() {
     }

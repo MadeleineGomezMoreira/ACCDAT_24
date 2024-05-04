@@ -22,8 +22,13 @@ public class PrescribedMedicationServiceImpl implements services.PrescribedMedic
     }
 
     @Override
-    public Either<AppError, List<PrescribedMedication>> getPrescribedMedicationByPatient(int patientId) {
-        return daoPrescribedMedication.getAll(new PrescribedMedication(patientId));
+    public Either<AppError, List<PrescribedMedication>> getAllPrescribedMedication() {
+        return daoPrescribedMedication.getAll();
+    }
+
+    @Override
+    public Either<AppError, Integer> updateMedicationDose(PrescribedMedication prescribedMedication) {
+        return daoPrescribedMedication.update(prescribedMedication);
     }
 
     @Override

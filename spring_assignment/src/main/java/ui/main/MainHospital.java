@@ -50,7 +50,7 @@ public class MainHospital {
                                 2. Append a new medication to the newest medical record of patient
                                 3. Modify the dosage of a prescribed medication
                                 4. Delete old medical records
-                                5. Show the name of the patients which were prescribed more than 400mg of Ibuprofen
+                                5. Show the name of the patients which were prescribed 400mg of Ibuprofen
                                 6. Show the name and the number of medications of each patient
                                 7. Exit
                                 """);
@@ -69,7 +69,7 @@ public class MainHospital {
                                 SaveMedicationToNewestRecord saveMedicationToNewestRecord = container.select(SaveMedicationToNewestRecord.class).get();
                                 saveMedicationToNewestRecord.saveMedicationToNewestRecord();
                                 break;
-                            case 3: //TODO: not done yet
+                            case 3:
                                 UpdateMedicationDosage updateMedicationDosage = container.select(UpdateMedicationDosage.class).get();
                                 updateMedicationDosage.updateMedicationDosage();
                                 break;
@@ -77,13 +77,13 @@ public class MainHospital {
                                 DeleteOldMedicalRecords deleteOldMedicalRecords = container.select(DeleteOldMedicalRecords.class).get();
                                 deleteOldMedicalRecords.deleteOldMedicalRecords();
                                 break;
-                            case 5://TODO: not done yet
-                                ShowPatientWithSpecificPrescription showPatientWithSpecificPrescription = container.select(ShowPatientWithSpecificPrescription.class).get();
-                                showPatientWithSpecificPrescription.showPatientMedication(0);
+                            case 5:
+                                ShowPatientsWithSpecificPrescription showPatientsWithSpecificPrescription = container.select(ShowPatientsWithSpecificPrescription.class).get();
+                                showPatientsWithSpecificPrescription.showPatientMedication();
                                 break;
-                            case 6://TODO: not done yet
-                                ShowNameAndNumberOfPatientPrescriptions showNameAndNumberOfPatientPrescriptions = container.select(ShowNameAndNumberOfPatientPrescriptions.class).get();
-                                showNameAndNumberOfPatientPrescriptions.showMostSharedAppointmentDate();
+                            case 6:
+                                ShowPatientPrescriptionAmount showPatientPrescriptionAmount = container.select(ShowPatientPrescriptionAmount.class).get();
+                                showPatientPrescriptionAmount.showMostSharedAppointmentDate();
                                 break;
                             case 7:
                                 System.out.println("Exiting...");

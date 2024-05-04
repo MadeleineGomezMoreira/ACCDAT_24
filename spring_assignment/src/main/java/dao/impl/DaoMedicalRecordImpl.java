@@ -1,5 +1,6 @@
 package dao.impl;
 
+import common.Constants;
 import dao.common.QueryStrings;
 import dao.connection.DBConnectionPool;
 import dao.mappers.MedicalRecordMapper;
@@ -35,25 +36,10 @@ public class DaoMedicalRecordImpl implements dao.DaoMedicalRecord {
     @Override
     //get all the medical records
     //SPRING
-    public Either<AppError, List<MedicalRecord>> getAll(MedicalRecord medicalRecord) {
-        try {
-            JdbcTemplate jdbcTemplate = new JdbcTemplate(pool.getDataSource());
-            List<MedicalRecord> medicalRecords = jdbcTemplate.query(QueryStrings.GET_ALL_MEDICAL_RECORDS, new MedicalRecordMapper());
-            return Either.right(medicalRecords);
-
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-            return Either.left(new AppError(e.getMessage()));
-        }
-    }
-
-    @Override
-    //get all the medical records older than 1 year
-    //SPRING
     public Either<AppError, List<MedicalRecord>> getAll() {
         try {
             JdbcTemplate jdbcTemplate = new JdbcTemplate(pool.getDataSource());
-            List<MedicalRecord> medicalRecords = jdbcTemplate.query(QueryStrings.GET_ALL_OLD_MEDICAL_RECORDS, new MedicalRecordMapper());
+            List<MedicalRecord> medicalRecords = jdbcTemplate.query(QueryStrings.GET_ALL_MEDICAL_RECORDS, new MedicalRecordMapper());
             return Either.right(medicalRecords);
 
         } catch (Exception e) {
@@ -70,6 +56,9 @@ public class DaoMedicalRecordImpl implements dao.DaoMedicalRecord {
             JdbcTemplate jdbcTemplate = new JdbcTemplate(pool.getDataSource());
             int patientId = medicalRecord.getPatientId();
             List<MedicalRecord> medicalRecords = jdbcTemplate.query(QueryStrings.GET_NEWEST_MEDICAL_RECORD_BY_PATIENT_ID, new MedicalRecordMapper(), patientId);
+            if (medicalRecords.isEmpty()) {
+                return Either.left(new AppError(Constants.NO_MEDICAL_RECORDS_FOUND_FOR_PATIENT_ERROR));
+            }
             return Either.right(medicalRecords.get(0));
         } catch (Exception e) {
             log.error(e.getMessage(), e);

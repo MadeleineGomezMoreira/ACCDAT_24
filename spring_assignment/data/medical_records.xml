@@ -1,2 +1,63 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<medical_records></medical_records>
+<medical_records>
+    <medical_record>
+        <patient>Gloria Hanks</patient>
+        <admission_date>2021-03-08</admission_date>
+        <diagnosis>internal bleeding</diagnosis>
+        <doctor>Salma Hita</doctor>
+        <medication>
+            <prescribed_medication>
+                <name>Benadryl</name>
+                <dosage>15mg</dosage>
+            </prescribed_medication>
+            <prescribed_medication>
+                <name>Aspirin</name>
+                <dosage>100mg</dosage>
+            </prescribed_medication>
+            <prescribed_medication>
+                <name>Ibuprofen</name>
+                <dosage>400mg</dosage>
+            </prescribed_medication>
+        </medication>
+    </medical_record>
+    <medical_record>
+        <patient>Carrie Smith</patient>
+        <admission_date>2021-04-09</admission_date>
+        <diagnosis>broken leg</diagnosis>
+        <doctor>Marcos Vega</doctor>
+        <medication>
+            <prescribed_medication>
+                <name>Ibuprofen</name>
+                <dosage>400mg</dosage>
+            </prescribed_medication>
+            <prescribed_medication>
+                <name>Acetaminophen</name>
+                <dosage>500gm</dosage>
+            </prescribed_medication>
+            <prescribed_medication>
+                <name>Ibuprofen</name>
+                <dosage>400mg</dosage>
+            </prescribed_medication>
+        </medication>
+    </medical_record>
+    <medical_record>
+        <patient>Carrie Smith</patient>
+        <admission_date>2021-04-08</admission_date>
+        <diagnosis>concussion</diagnosis>
+        <doctor>Marcos Vega</doctor>
+        <medication>
+            <prescribed_medication>
+                <name>Morphine</name>
+                <dosage>15mg</dosage>
+            </prescribed_medication>
+            <prescribed_medication>
+                <name>Oxycontin</name>
+                <dosage>20gm</dosage>
+            </prescribed_medication>
+            <prescribed_medication>
+                <name>Ibuprofen</name>
+                <dosage>400mg</dosage>
+            </prescribed_medication>
+        </medication>
+    </medical_record>
+</medical_records>

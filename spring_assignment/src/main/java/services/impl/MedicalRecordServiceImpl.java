@@ -1,5 +1,6 @@
 package services.impl;
 
+import common.Constants;
 import dao.*;
 import io.vavr.control.Either;
 import jakarta.inject.Inject;
@@ -36,15 +37,10 @@ public class MedicalRecordServiceImpl implements services.MedicalRecordService {
         this.daoPrescribedMedication = daoPrescribedMedication;
     }
 
-    @Override
-    public Either<AppError, List<MedicalRecord>> getAllRecordsByPatient(int patientId) {
-        return daoMedicalRecord.getAll(new MedicalRecord(patientId));
-    }
-
     //show all the medical records along with their prescribed medications
     @Override
     public Either<AppError, List<MedicalRecord>> showRecordsWithMedications() {
-        Either<AppError, List<MedicalRecord>> getAllRecords = daoMedicalRecord.getAll(new MedicalRecord());
+        Either<AppError, List<MedicalRecord>> getAllRecords = daoMedicalRecord.getAll();
         Either<AppError, List<PrescribedMedication>> getAllMedication = daoPrescribedMedication.getAll();
 
         if (getAllRecords.isRight()) {
@@ -69,33 +65,12 @@ public class MedicalRecordServiceImpl implements services.MedicalRecordService {
 
     @Override
     public Either<AppError, Integer> deleteOldAndSaveXML() {
-        Either<AppError, List<MedicalRecord>> oldMedicalRecords = daoMedicalRecord.getAll();
-        if (oldMedicalRecords.isLeft()) {
-            return Either.left(oldMedicalRecords.getLeft());
+        if (daoXML.save().isRight()) {
+            //then we delete them from the database (both medical records and prescribed medications)
+            return daoMedicalRecord.delete();
+        } else {
+            return Either.left(new AppError(Constants.ERROR_SAVING_OLD_RECORDS));
         }
-
-        List<MedicalRecord> medicalRecords = oldMedicalRecords.get();
-
-        Either<AppError, List<PrescribedMedication>> oldPrescribedMedications = daoPrescribedMedication.getAll();
-        if (oldPrescribedMedications.isRight()) {
-            List<PrescribedMedication> prescribedMedications = oldPrescribedMedications.get();
-
-            //we group the prescribed medications by medical record id into a map
-            Map<Integer, List<PrescribedMedication>> medicationMap = prescribedMedications.stream()
-                    .collect(Collectors.groupingBy(PrescribedMedication::getMedicalRecordId));
-
-            //we add the prescribed medications to the medical records
-            medicalRecords.forEach(medicalRecord ->
-                    medicalRecord.setPrescribedMedication(medicationMap.getOrDefault(medicalRecord.getId(), new ArrayList<>()))
-            );
-        }
-
-        //we finally convert the medical records to XML and save them
-        List<MedicalRecordXML> medicalRecordXMLList = medicalRecords.stream()
-                .flatMap(this::toMedicalRecordXML)
-                .toList();
-
-        return daoXML.save(new MedicalRecordsXML(medicalRecordXMLList));
     }
 
     private Stream<MedicalRecordXML> toMedicalRecordXML(MedicalRecord medRecord) {

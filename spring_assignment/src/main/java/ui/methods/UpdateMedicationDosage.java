@@ -1,60 +1,48 @@
 package ui.methods;
 
-import common.Constants;
 import io.vavr.control.Either;
 import jakarta.inject.Inject;
+import model.PrescribedMedication;
 import model.error.AppError;
-import services.PatientService;
+import services.PrescribedMedicationService;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class UpdateMedicationDosage {
 
-    private final PatientService service;
+    private final PrescribedMedicationService service;
 
     @Inject
-    public UpdateMedicationDosage(PatientService service) {
+    public UpdateMedicationDosage(PrescribedMedicationService service) {
         this.service = service;
     }
 
     public void updateMedicationDosage() {
-        boolean confirmed = false;
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("Please input the patient's id:");
+        System.out.println("List of all medication prescribed to patients:");
 
-        int patientId = sc.nextInt();
-        sc.nextLine();
+        Either<AppError, List<PrescribedMedication>> getAllMedication = service.getAllPrescribedMedication();
 
-        Either<AppError,Integer> either = service.delete(patientId, confirmed);
+        if (getAllMedication.isRight()) {
+            List<PrescribedMedication> medicationList = getAllMedication.get();
+            medicationList.forEach(System.out::println);
 
+            System.out.println("Please enter the id of the medication you want to update:");
+            int id = sc.nextInt();
+            sc.nextLine();
+            System.out.println("Please enter the new dose of the medication (format: XXXmg | XXgr):");
+            String newDose = sc.nextLine();
 
+            PrescribedMedication prescribedMedication = new PrescribedMedication(id, newDose);
 
-
-        if (either.isRight()) {
-            System.out.println("Patient deleted successfully!");
-        } else if (either.isLeft()) {
-
-            if(either.getLeft().getMessage().equals(Constants.PATIENT_HAS_MEDICATION_ASSOCIATED_TO_MEDICAL_RECORDS_ERROR)){
-                System.out.println(either.getLeft().getMessage());
-                System.out.println("Please confirm the deletion of the patient (Y/N).");
-                String input = sc.nextLine();
-
-                if (input.equals("Y")) {
-                    confirmed = true;
-                    either = service.delete(patientId, confirmed);
-                    if (either.isRight()) {
-                        System.out.println("Patient deleted successfully!");
-                    } else {
-                        System.out.println(either.getLeft().getMessage());
-                    }
-                } else {
-                    System.out.println("Goodbye!");
-                }
-            } else{
-                System.out.println(either.getLeft());
-            }
-
+            service.updateMedicationDose(prescribedMedication).peek(e -> System.out.println("Medication updated successfully!")).
+                    peekLeft(e -> System.out.println("ERROR:" + e.getMessage()));
+        } else {
+            System.out.println(getAllMedication.getLeft().getMessage());
         }
+
+
     }
 }

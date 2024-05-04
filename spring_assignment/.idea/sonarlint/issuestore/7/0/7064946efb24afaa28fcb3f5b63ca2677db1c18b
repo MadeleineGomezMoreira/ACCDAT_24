@@ -10,12 +10,6 @@ L	java:S106&"+Replace this use of System.out by a logger.(‰œø©ıÿÿÿÿ8¾İ€Êì1
 G	java:S106/"+Replace this use of System.out by a logger.(Îñë8¾İ€Êì1
 L	java:S106?"+Replace this use of System.out by a logger.(×í® ÿÿÿÿÿ8Àİ€Êì1
 L	java:S106D"+Replace this use of System.out by a logger.(×í® ÿÿÿÿÿ8Áİ€Êì1
-O
-java:S1135H"2Complete the task associated to this TODO comment.(ùññú8ªĞƒÊì1
-T
-java:S1135P"2Complete the task associated to this TODO comment.(˜ãÙˆıÿÿÿÿ8®¸‡Êì1
-O
-java:S1135T"2Complete the task associated to this TODO comment.(Ñ»ûé8ÏŠÊì1
 L	java:S106Y"+Replace this use of System.out by a logger.(î‡ó©ùÿÿÿÿ8Ãİ€Êì1
 L	java:S106]"+Replace this use of System.out by a logger.(ãó¶‡ùÿÿÿÿ8Äİ€Êì1
 G	java:S106g"+Replace this use of System.out by a logger.(Îñë8Åİ€Êì1
@@ -25,4 +19,4 @@ L	java:S106y"+Replace this use of System.out by a logger.(ãó¶‡ùÿÿÿÿ8Ùùáì1
 F	java:S106~"+Replace this use of System.out by a logger.(Ãë˜r8Ùùáì1
 H	java:S106"+Replace this use of System.out by a logger.(––ëö8Úùáì1
 ã
-java:S6541"ÅA "Brain Method" was detected. Refactor it to reduce at least one of the following metrics: LOC from 85 to 64, Complexity from 15 to 14, Nesting Level from 5 to 2, Number of Variables from 21 to 6.(Çµí‘8Ûùáì1
+java:S6541"ÅA "Brain Method" was detected. Refactor it to reduce at least one of the following metrics: LOC from 85 to 64, Complexity from 15 to 14, Nesting Level from 5 to 2, Number of Variables from 21 to 6.(Çµí‘8ûÇ†°î1

@@ -8,8 +8,6 @@ import java.util.List;
 
 public interface DaoPrescribedMedication {
 
-    Either<AppError, List<PrescribedMedication>> getAll(PrescribedMedication prescribedMedication);
-
     //SPRING
     Either<AppError, List<PrescribedMedication>> getAll();
 

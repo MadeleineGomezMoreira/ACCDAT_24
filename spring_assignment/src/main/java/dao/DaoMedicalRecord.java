@@ -7,7 +7,6 @@ import model.error.AppError;
 import java.util.List;
 
 public interface DaoMedicalRecord {
-    Either<AppError, List<MedicalRecord>> getAll(MedicalRecord medicalRecord);
 
     Either<AppError, List<MedicalRecord>> getAll();
 
