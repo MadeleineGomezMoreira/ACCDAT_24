@@ -1,0 +1,20 @@
+
+“
+java:S1192E"KDefine a constant instead of duplicating this literal "Loading..." 6 times.(Χν® ÿÿÿÿÿ8Υψοεχ1J$7bc39061-d464-417a-b286-d10b4c0ed4af
+k
+java:S5411'"(Use a primitive boolean expression here.(Ππέ8Ψψοεχ1J$d60ca003-f02a-4341-9e01-c9df1124b53e
+r	java:S106"+Replace this use of System.out by a logger.(ΔΎ—©όÿÿÿÿ8δϋοεχ1J$54e3b215-2951-4723-82f5-a918133305e9
+r	java:S106"+Replace this use of System.out by a logger.(Ώσ¬µϊÿÿÿÿ8εϋοεχ1J$4ae224e2-425d-4177-a110-f0afef4129a3
+m	java:S106"+Replace this use of System.out by a logger.(†ΐζέ8ζϋοεχ1J$4aba09b1-80ef-4983-ab87-28e65cf36a4c
+r	java:S106("+Replace this use of System.out by a logger.(‰ψ©ύÿÿÿÿ8θϋοεχ1J$306066b3-ece5-41f5-b3b7-f724951dfd68
+m	java:S106-"+Replace this use of System.out by a logger.(Ξρλ8ιϋοεχ1J$43ad6939-4f71-4e89-be72-f27d1d896b9e
+r	java:S106E"+Replace this use of System.out by a logger.(Χν® ÿÿÿÿÿ8κϋοεχ1J$95cb4ff2-89ad-40a4-b886-0e55fe673f74
+r	java:S106Z"+Replace this use of System.out by a logger.(Χν® ÿÿÿÿÿ8ξϋοεχ1J$f3aa537e-e609-4066-9150-a577c32d0d9b
+r	java:S106c"+Replace this use of System.out by a logger.(Χν® ÿÿÿÿÿ8ρϋοεχ1J$f5383437-8e0b-419b-aeae-e3f27b309a68
+r	java:S106h"+Replace this use of System.out by a logger.(Χν® ÿÿÿÿÿ8ςϋοεχ1J$29184ec7-4423-4c65-bf17-749649826259
+r	java:S106m"+Replace this use of System.out by a logger.(Χν® ÿÿÿÿÿ8σϋοεχ1J$f839cfd3-31db-4eec-8467-50f1ce8f3ecc
+r	java:S106r"+Replace this use of System.out by a logger.(Χν® ÿÿÿÿÿ8σϋοεχ1J$754dca72-5e5f-4eb9-a8dd-0e0c25233a4c
+r	java:S106z"+Replace this use of System.out by a logger.(Λ”΄ÿÿÿÿÿ8Θέκχ1J$92e313d9-f09d-4390-8720-32b3273e5495
+s	java:S106€"+Replace this use of System.out by a logger.(·€”ζÿÿÿÿÿ8εψ°λχ1J$03c36f7b-6ce5-40a2-87de-da0012c51905
+‰
+java:S6541"ΕA "Brain Method" was detected. Refactor it to reduce at least one of the following metrics: LOC from 84 to 64, Complexity from 16 to 14, Nesting Level from 4 to 2, Number of Variables from 22 to 6.(Ηµν‘8Λέκχ1J$a37ddd19-6abf-420d-b85f-345c64f38293

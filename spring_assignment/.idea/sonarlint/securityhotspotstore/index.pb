@@ -95,3 +95,11 @@ Q
 !src/main/java/dao/DaoPayment.java,7\c\7c7e9aba781290a0ab453ec04901d953aca72f1b
 P
  src/main/java/model/Payment.java,a\3\a3e882a07794daac50399f00be23b437de33521f
+T
+$src/main/java/model/Appointment.java,2\6\2665ac9ec23584c73dcf883d07bb615205d2ff3a
+O
+src/main/java/model/Doctor.java,f\5\f50cec2f283e54abfe4df188a099735b8099c274
+S
+#src/main/java/model/Credential.java,6\8\68d39015010349188c785512b71dfb08d2e37972
+a
+1src/main/java/services/impl/LoginServiceImpl.java,0\b\0beae38067df17620fd0201147ebe0cb1f0c4cc3
