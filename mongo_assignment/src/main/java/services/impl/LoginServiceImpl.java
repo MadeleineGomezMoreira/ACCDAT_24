@@ -1,7 +1,7 @@
 package services.impl;
 
 import common.Constants;
-import dao.DaoCredential;
+import dao.hibernate.DaoCredential;
 import io.vavr.control.Either;
 import jakarta.inject.Inject;
 import model.Credential;

@@ -51,7 +51,6 @@ public class MedicalRecord {
     }
 
 
-
     public MedicalRecord(int id, LocalDate admissionDate, String diagnosis, int patientId, int doctorId) {
         this.id = id;
         this.admissionDate = admissionDate;

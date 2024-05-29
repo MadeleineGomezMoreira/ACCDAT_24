@@ -1,7 +1,6 @@
 package ui.methods;
 
 import jakarta.inject.Inject;
-import model.MedicalRecord;
 import model.PrescribedMedication;
 import services.PrescribedMedicationService;
 

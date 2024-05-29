@@ -1,6 +1,6 @@
 package services.impl;
 
-import dao.DaoPrescribedMedication;
+import dao.hibernate.DaoPrescribedMedication;
 import io.vavr.control.Either;
 import jakarta.inject.Inject;
 import model.PrescribedMedication;

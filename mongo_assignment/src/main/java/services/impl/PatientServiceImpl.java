@@ -1,7 +1,7 @@
 package services.impl;
 
 import common.Constants;
-import dao.DaoPatient;
+import dao.hibernate.DaoPatient;
 import io.vavr.control.Either;
 import jakarta.inject.Inject;
 import model.Patient;

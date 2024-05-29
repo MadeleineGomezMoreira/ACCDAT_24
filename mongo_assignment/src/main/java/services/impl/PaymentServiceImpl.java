@@ -1,15 +1,13 @@
 package services.impl;
 
-import dao.DaoPayment;
-import dao.DaoQueries;
+import dao.hibernate.DaoPayment;
+import dao.hibernate.DaoQueries;
 import io.vavr.control.Either;
 import jakarta.inject.Inject;
-import model.Payment;
 import model.dto.TotalPaymentByPatientDTO;
 import model.error.AppError;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 

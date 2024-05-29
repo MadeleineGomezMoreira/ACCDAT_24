@@ -1,6 +1,6 @@
 package services.impl;
 
-import dao.DaoQueries;
+import dao.hibernate.DaoQueries;
 import io.vavr.control.Either;
 import jakarta.inject.Inject;
 import model.dto.PatientWithMedNumber;
