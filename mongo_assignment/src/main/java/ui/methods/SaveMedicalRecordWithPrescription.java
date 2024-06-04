@@ -33,9 +33,9 @@ public class SaveMedicalRecordWithPrescription {
         Scanner sc = new Scanner(System.in);
 
         Either<AppError, HashMap<Integer, ObjectId>> allPatientsIDs = patientService.getAllPatientsIDs();
-        Either<AppError, HashMap<Integer, ObjectId>> allDoctorIds = doctorService.getAllDoctorsIDs();
+        Either<AppError, HashMap<Integer, ObjectId>> allDoctorIDs = doctorService.getAllDoctorsIDs();
 
-        if (allPatientsIDs.isRight() && allDoctorIds.isRight()) {
+        if (allPatientsIDs.isRight() && allDoctorIDs.isRight()) {
             allPatientsIDs.get().forEach((key, value) -> System.out.println(key + " - " + value));
 
             System.out.println("Enter the patient's id: (select the number associated to its object Id)");
@@ -44,11 +44,13 @@ public class SaveMedicalRecordWithPrescription {
 
             ObjectId patientObjectId = allPatientsIDs.get().get(patientId);
 
-            System.out.println("Enter the patient's id: (select the number associated to its object Id)");
+            allDoctorIDs.get().forEach((key, value) -> System.out.println(key + " - " + value));
+
+            System.out.println("Enter the doctor's id: (select the number associated to its object Id)");
             int doctorId = sc.nextInt();
             sc.nextLine();
 
-            ObjectId doctorObjectId = allDoctorIds.get().get(doctorId);
+            ObjectId doctorObjectId = allDoctorIDs.get().get(doctorId);
 
 
             System.out.println("Please enter the diagnosis:");

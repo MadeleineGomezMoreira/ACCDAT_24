@@ -2,12 +2,15 @@ package dao.hibernate.impl;
 
 import common.Constants;
 import dao.hibernate.DaoDoctor;
+import dao.hibernate.common.HqlQueries;
 import dao.hibernate.connection.JPAUtil;
 import io.vavr.control.Either;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import model.hibernate.DoctorEntity;
 import model.error.AppError;
+
+import java.util.List;
 
 public class DaoDoctorImpl implements DaoDoctor {
 
@@ -19,17 +22,18 @@ public class DaoDoctorImpl implements DaoDoctor {
         this.jpaUtil = jpaUtil;
     }
 
+    //get all
     @Override
-    public Either<AppError, DoctorEntity> get(DoctorEntity doctorEntity) {
-        Either<AppError, DoctorEntity> result;
+    public Either<AppError, List<DoctorEntity>> getAll() {
+        Either<AppError, List<DoctorEntity>> result;
         em = jpaUtil.getEntityManager();
 
         try {
-            DoctorEntity doctorEntityFound = em.find(DoctorEntity.class, doctorEntity.getId());
-            if (doctorEntityFound == null) {
-                result = Either.left(new AppError(Constants.DATA_RETRIEVAL_ERROR_NOT_FOUND_INCORRECT_ID));
+            List<DoctorEntity> doctorEntities = em.createQuery(HqlQueries.GET_ALL_DOCTORS_HQL, DoctorEntity.class).getResultList();
+            if (doctorEntities.isEmpty()) {
+                result = Either.left(new AppError(Constants.DATA_RETRIEVAL_ERROR_NOT_FOUND));
             } else {
-                result = Either.right(doctorEntityFound);
+                result = Either.right(doctorEntities);
             }
         } catch (Exception e) {
             result = Either.left(new AppError(e.getMessage()));

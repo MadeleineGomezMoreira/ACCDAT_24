@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -22,27 +23,16 @@ public class PatientEntity {
     private LocalDate birthDate;
     @Column(name = "phone")
     private String phone;
-
-    @OneToOne(cascade = {CascadeType.PERSIST}, fetch = FetchType.LAZY, mappedBy = "patient")
-    private CredentialEntity credential;
-
-    public PatientEntity(int id, String name, LocalDate birthDate, String phone, CredentialEntity credential) {
-        this.id = id;
-        this.name = name;
-        this.birthDate = birthDate;
-        this.phone = phone;
-        this.credential = credential;
-    }
+    //I will set this to eager just to retrieve all the data from the database
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_patient")
+    private List<MedicalRecordEntity> medicalRecords;
 
     public PatientEntity(int id, String name, LocalDate birthDate, String phone) {
         this.id = id;
         this.name = name;
         this.birthDate = birthDate;
         this.phone = phone;
-    }
-
-    public PatientEntity(int id) {
-        this.id = id;
     }
 
     @Override

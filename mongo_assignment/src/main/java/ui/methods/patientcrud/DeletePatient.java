@@ -35,19 +35,19 @@ public class DeletePatient {
             Either<AppError, Integer> result = patientService.deletePatient(objectId, false);
 
             if (result.isRight()) {
-                System.out.println("PatientEntity deleted successfully!");
+                System.out.println("Patient deleted successfully!");
             } else {
                 String errorMessage = result.getLeft().getMessage();
 
                 if (errorMessage.equals(Constants.PATIENT_STILL_HAS_MEDICAL_RECORDS_ERROR)) {
-                    System.out.println(Constants.APPOINTMENT_DELETION_QUESTION_ERROR);
+                    System.out.println(Constants.MEDICAL_RECORD_DELETION_QUESTION_ERROR);
                     String answer = sc.nextLine();
 
                     if (answer.equalsIgnoreCase("Y")) {
                         patientService.deletePatient(objectId, true);
-                        System.out.println("PatientEntity deleted successfully!");
+                        System.out.println("Patient deleted successfully!");
                     } else {
-                        System.out.println("PatientEntity was not deleted. Operation canceled.");
+                        System.out.println("Patient was not deleted. Operation canceled.");
                     }
                 } else {
                     System.out.println("An error occurred: " + errorMessage);

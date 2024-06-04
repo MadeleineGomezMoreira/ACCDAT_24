@@ -6,6 +6,7 @@ public class HqlQueries {
 
     //PATIENTS CRUD
     public static final String GET_ALL_PATIENTS_HQL = "from PatientEntity";
+    public static final String GET_ALL_DOCTORS_HQL = "from DoctorEntity";
     public static final String GET_PATIENT_BY_ID_HQL = "from PatientEntity where id = :id";
     public static final String DELETE_PATIENT_BY_ID_HQL = "delete from PatientEntity where id = :id";
     public static final String UPDATE_PATIENT_HQL = "update PatientEntity set name = :name, birthDate = :birthDate, phone = :phone where id = :id";

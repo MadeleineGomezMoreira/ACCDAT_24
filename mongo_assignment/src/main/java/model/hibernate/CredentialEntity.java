@@ -20,9 +20,6 @@ public class CredentialEntity {
     private String username;
     @Column(name = "password")
     private String password;
-    @OneToOne
-    @JoinColumn(name = "id_patient", referencedColumnName = "id")
-    private PatientEntity patientEntity;
 
     public CredentialEntity(String username) {
         this.username = username;

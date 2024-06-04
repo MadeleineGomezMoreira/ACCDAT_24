@@ -20,4 +20,12 @@ public class Doctor {
     @SerializedName("phone")
     private String phone;
 
+    @Override
+    public String toString() {
+            return "\n" + "--DOCTOR--" +
+                    "\n" + "ID: " + doctorId +
+                    "\n" + "Name: " + name +
+                    "\n" + "Specialty: " + specialty +
+                    "\n" + "Phone: " + phone;
+    }
 }

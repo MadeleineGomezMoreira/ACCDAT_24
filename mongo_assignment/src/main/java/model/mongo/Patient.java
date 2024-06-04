@@ -25,4 +25,22 @@ public class Patient {
     @SerializedName("medical_records")
     private List<MedicalRecord> medicalRecords;
 
+    @Override
+    public String toString() {
+        if(medicalRecords != null) {
+            return "\n" + "--PATIENT--" +
+                    "\n" + "ID: " + patientId +
+                    "\n" + "Name: " + name +
+                    "\n" + "Birthday: " + birthDate +
+                    "\n" + "Phone: " + phone
+                    + "\n" + "Medical Records: " + medicalRecords;
+        } else {
+            return "\n" + "--PATIENT--" +
+                    "\n" + "ID: " + patientId +
+                    "\n" + "Name: " + name +
+                    "\n" + "Birthday: " + birthDate +
+                    "\n" + "Phone: " + phone;
+        }
+    }
+
 }

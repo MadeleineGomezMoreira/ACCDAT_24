@@ -1,6 +1,5 @@
 package services.impl;
 
-import dao.hibernate.DaoMedicalRecord;
 import dao.mongo.DaoMedicalRecordMongo;
 import io.vavr.control.Either;
 import jakarta.inject.Inject;;
@@ -16,12 +15,10 @@ import java.util.List;
 
 public class MedicalRecordServiceImpl implements services.MedicalRecordService {
 
-    private final DaoMedicalRecord daoMedicalRecord;
     private final DaoMedicalRecordMongo daoMedicalRecordMongo;
 
     @Inject
-    public MedicalRecordServiceImpl(DaoMedicalRecord daoMedicalRecord, DaoMedicalRecordMongo daoMedicalRecordMongo) {
-        this.daoMedicalRecord = daoMedicalRecord;
+    public MedicalRecordServiceImpl(DaoMedicalRecordMongo daoMedicalRecordMongo) {
         this.daoMedicalRecordMongo = daoMedicalRecordMongo;
     }
 
@@ -50,24 +47,21 @@ public class MedicalRecordServiceImpl implements services.MedicalRecordService {
     }
 
     @Override
-    public Either<AppError, Integer> deleteOlderThan2024() {
-        return daoMedicalRecord.delete();
-    }
-
-    @Override
     public Either<AppError, Integer> save(MedicalRecord medicalRecord) {
         return daoMedicalRecordMongo.save(medicalRecord);
     }
 
     private List<MedicalRecordDTO> convertToDTO(List<MedicalRecord> medicalRecords) {
         List<MedicalRecordDTO> medicalRecordDTOs = new ArrayList<>();
-        medicalRecords.forEach(medicalRecord -> {
-            MedicalRecordDTO medicalRecordDTO = new MedicalRecordDTO();
-            medicalRecordDTO.setDoctorId(medicalRecord.getDoctorId());
-            medicalRecordDTO.setDiagnosis(medicalRecord.getDiagnosis());
-            medicalRecordDTO.setAdmissionDate(medicalRecord.getAdmissionDate());
-            medicalRecordDTOs.add(medicalRecordDTO);
-        });
+        if (medicalRecords != null) {
+            medicalRecords.forEach(medicalRecord -> {
+                MedicalRecordDTO medicalRecordDTO = new MedicalRecordDTO();
+                medicalRecordDTO.setDoctorId(medicalRecord.getDoctorId());
+                medicalRecordDTO.setDiagnosis(medicalRecord.getDiagnosis());
+                medicalRecordDTO.setAdmissionDate(medicalRecord.getAdmissionDate());
+                medicalRecordDTOs.add(medicalRecordDTO);
+            });
+        }
         return medicalRecordDTOs;
     }
 }

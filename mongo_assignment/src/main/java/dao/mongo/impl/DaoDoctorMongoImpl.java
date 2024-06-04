@@ -77,6 +77,11 @@ public class DaoDoctorMongoImpl implements dao.mongo.DaoDoctorMongo {
                 //we convert the Document to a Patient object
                 Patient patient = gson.fromJson(findResult.toJson(), Patient.class);
 
+                //set medical records to empty list if null
+                if (patient.getMedicalRecords() == null) {
+                    patient.setMedicalRecords(new ArrayList<>());
+                }
+
                 //extract the doctor ObjectIds from the patient's medical records
                 Set<ObjectId> doctorIdList = new HashSet<>();
                 for (MedicalRecord record : patient.getMedicalRecords()) {
@@ -93,7 +98,12 @@ public class DaoDoctorMongoImpl implements dao.mongo.DaoDoctorMongo {
                     }
                 }
 
-                result = Either.right(doctors);
+                if (doctors.isEmpty()) {
+                    result = Either.left(new AppError(Constants.NO_DOCTORS_TREATED_THIS_PATIENT_ERROR));
+                } else {
+                    result = Either.right(doctors);
+                }
+
             } else {
                 result = Either.left(new AppError(Constants.DATA_RETRIEVAL_ERROR_NOT_FOUND));
             }

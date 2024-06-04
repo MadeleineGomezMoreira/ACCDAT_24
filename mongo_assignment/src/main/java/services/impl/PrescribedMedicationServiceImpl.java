@@ -1,29 +1,23 @@
 package services.impl;
 
-import dao.hibernate.DaoPrescribedMedication;
 import dao.mongo.DaoPrescribedMedicationMongo;
 import io.vavr.control.Either;
 import jakarta.inject.Inject;
 import model.dto.PatientWithMedicationDTO;
-import model.hibernate.PrescribedMedicationEntity;
 import model.dto.PrescribedMedicationDTO;
-import model.dto.RecordWithPrescriptionsDTO;
 import model.error.AppError;
 import model.mongo.PrescribedMedication;
 import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 public class PrescribedMedicationServiceImpl implements services.PrescribedMedicationService {
 
-    private final DaoPrescribedMedication daoPrescribedMedication;
     private final DaoPrescribedMedicationMongo daoPrescribedMedicationMongo;
 
     @Inject
-    public PrescribedMedicationServiceImpl(DaoPrescribedMedication daoPrescribedMedication, DaoPrescribedMedicationMongo daoPrescribedMedicationMongo) {
-        this.daoPrescribedMedication = daoPrescribedMedication;
+    public PrescribedMedicationServiceImpl(DaoPrescribedMedicationMongo daoPrescribedMedicationMongo) {
         this.daoPrescribedMedicationMongo = daoPrescribedMedicationMongo;
     }
 
@@ -42,35 +36,13 @@ public class PrescribedMedicationServiceImpl implements services.PrescribedMedic
     }
 
     @Override
-    public Either<AppError, Integer> save(PrescribedMedicationEntity prescribedMedicationEntity) {
-        return daoPrescribedMedication.save(prescribedMedicationEntity);
+    public Either<AppError, Integer> save(PrescribedMedication medication) {
+        return daoPrescribedMedicationMongo.save(medication);
     }
 
     @Override
-    public Either<AppError, List<RecordWithPrescriptionsDTO>> getRecordsWithPrescription() {
-        Either<AppError, List<RecordWithPrescriptionsDTO>> result;
-
-        Either<AppError, List<PrescribedMedicationEntity>> prescriptions = daoPrescribedMedication.getAll();
-
-        if (prescriptions.isLeft()) {
-            result = Either.left(prescriptions.getLeft());
-        } else {
-
-            List<PrescribedMedicationEntity> medication = prescriptions.get();
-            List<RecordWithPrescriptionsDTO> recordsWithPrescriptions = new ArrayList<>();
-
-            medication.stream()
-                    .sorted(Comparator.comparingInt(PrescribedMedicationEntity::getMedicalRecordId))
-                    .forEach(prescribedMedication -> {
-                        RecordWithPrescriptionsDTO recordWithPrescriptions = new RecordWithPrescriptionsDTO();
-                        recordWithPrescriptions.setRecordId(prescribedMedication.getMedicalRecordId());
-                        List<PrescribedMedicationDTO> prescriptionsList = recordWithPrescriptions.getPrescription();
-                        prescriptionsList.add(new PrescribedMedicationDTO(prescribedMedication.getName(), prescribedMedication.getDose()));
-                        recordWithPrescriptions.setPrescription(prescriptionsList);
-                        recordsWithPrescriptions.add(recordWithPrescriptions);
-                    });
-            result = Either.right(recordsWithPrescriptions);
-        }
-        return result;
+    public Either<AppError, Integer> deleteLastMedicationFromLastMedicalRecord(ObjectId patientId) {
+        return daoPrescribedMedicationMongo.delete(patientId);
     }
+
 }

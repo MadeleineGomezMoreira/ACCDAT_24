@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 public class PatientWithMedicationDTO {
 
-    private org.bson.types.ObjectId ObjectId;
+    private ObjectId ObjectId;
     private List<PrescribedMedicationDTO> medication;
 
     @Override

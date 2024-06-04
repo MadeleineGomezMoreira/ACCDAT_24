@@ -13,7 +13,5 @@ public interface MedicalRecordService {
 
     Either<AppError, List<PatientWithRecordsDTO>> getAllRecordsByPatient();
 
-    Either<AppError, Integer> deleteOlderThan2024();
-
     Either<AppError, Integer> save(MedicalRecord medicalRecord);
 }

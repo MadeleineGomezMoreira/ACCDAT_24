@@ -26,4 +26,20 @@ public class MedicalRecord {
     public String patientName;
     public ObjectId patientId;
 
+    @Override
+    public String toString() {
+        if(prescribedMedication != null) {
+            return "\n" + "--MEDICAL RECORD--" +
+                    "\n" + "Admission date: " + admissionDate +
+                    "\n" + "Diagnosis: " + diagnosis +
+                    "\n" + "Doctor ID: " + doctorId +
+                    "\n" + "Prescribed Medication: " + prescribedMedication;
+        } else {
+            return "\n" + "--MEDICAL RECORD--" +
+                    "\n" + "Admission date: " + admissionDate +
+                    "\n" + "Diagnosis: " + diagnosis +
+                    "\n" + "Doctor ID: " + doctorId;
+        }
+    }
+
 }

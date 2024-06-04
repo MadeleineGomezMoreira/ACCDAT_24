@@ -36,8 +36,7 @@ public class MedicalRecordEntity {
     private int patientId;
     @Column(name = "id_doctor")
     private int doctorId;
-    //I will be using this annotation for the extra query nº3, which is to get the name and number of prescribed medicines of each patient
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_medical_record")
     private List<PrescribedMedicationEntity> prescribedMedication = new ArrayList<>();
 

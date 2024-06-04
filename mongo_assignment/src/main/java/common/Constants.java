@@ -24,16 +24,19 @@ public class Constants {
 
     //ERROR MESSAGES
     public static final String NO_CREDENTIAL_ASSOCIATED_TO_USERNAME_ERROR = "There is no credential associated to the provided username.";
+    public static final String NO_DOCTORS_TREATED_THIS_PATIENT_ERROR = "No doctors treated this patient, they have no medical records.";
+    public static final String PATIENT_HAS_NO_MEDICAL_RECORDS_ERROR = "The patient has no medical records";
     public static final String DOCTOR_OR_PATIENT_DO_NOT_EXIST_ERROR = "The patient or doctor do not exist";
     public static final String FILE_DOES_NOT_EXIST_ERROR = "The data file does not exist";
     public static final String DATA_RETRIEVAL_ERROR_NOT_FOUND = "The data was not found";
+    public static final String DATA_MIGRATION_ERROR = "There was an error while migrating the data. The data was not found in the MySQL database.";
     public static final String CANNOT_DELETE_MEDICATION_EMPTY_MEDICAL_RECORD = "The prescribed medication cannot be deleted from the medical record. There must be at least one prescribed medication in the medical record";
     public static final String DATA_RETRIEVAL_ERROR_NOT_FOUND_INCORRECT_ID = "The data was not found. The provided ID is incorrect";
     public static final String DATA_RETRIEVAL_ERROR_NO_DATA = "There is no data available";
     public static final String DATA_IS_ALREADY_STORED_IN_XML_FILE_ERROR = "The data was already stored in the xml file";
     public static final String INTERNAL_ERROR = "There was an internal error";
     public static final String PATIENT_STILL_HAS_MEDICAL_RECORDS_ERROR = "The patient still has medical records and thus cannot be deleted";
-    public static final String APPOINTMENT_DELETION_QUESTION_ERROR = "The patient still has appointments, would you like to cancel them? (Y/N)";
+    public static final String MEDICAL_RECORD_DELETION_QUESTION_ERROR = "The patient still has medical records, would you like to delete them? (Y/N)";
     public static final String NO_PATIENTS_WITH_MEDICATION_ERROR = "No patients were prescribed the specified medication";
     public static final String NO_MEDICATION_PRESCRIBED_TO_PATIENT_ERROR = "This patient was not prescribed any medication";
     public static final String MEDICATION_INSERTION_DB_ERROR = "There was an error while inserting the prescribed medication into the database";
@@ -46,6 +49,7 @@ public class Constants {
     public static final String DOCTOR_INSERTION_ERROR = "There was an error while trying to insert the doctor: ";
     public static final String PATIENT_UPDATE_ERROR = "There was an error while trying to update the patient: ";
     public static final String PRESCRIBED_MEDICATION_INSERTION_ERROR = "There was an error while trying to insert prescribed medication into the medical record: ";
+    public static final String MEDICAL_RECORD_INSERTION_ERROR = "There was an error while trying to insert the medical record";
     public static final String PATIENT_DELETION_ERROR = "There was an error while trying to delete the patient: ";
     public static final String INVALID_NAME_INPUT_ERROR = "Please input a valid name for the patient.";
     public static final String INVALID_DATE_INPUT_ERROR = "Birth date is not valid. Please input a date before today.";

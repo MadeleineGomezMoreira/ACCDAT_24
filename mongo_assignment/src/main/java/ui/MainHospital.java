@@ -7,9 +7,6 @@ import model.error.AppError;
 import services.LoginService;
 import ui.methods.*;
 import ui.methods.patientcrud.*;
-import ui.methods.aggregations.GetDateWithMostAdmissions;
-import ui.methods.aggregations.GetNameAndMedicationNumOfEachPatient;
-import ui.methods.aggregations.GetPatientWithMostMedicalRecords;
 
 import java.util.Scanner;
 
@@ -47,16 +44,14 @@ public class MainHospital {
                             3. Update a patient's information
                             4. Delete a patient's account
                             5. Save a new patient
-                            6. Show the medication prescribed in every medical record
+                            6. Show medical records by patient
                             7. Append a new medical record with two medications
-                            8. Get the total amount paid by each patient, ordered by amount paid
-                            9. Show all the patients with their medicalRecords
-                            10. Append a new prescription to a medical record
-                            11. Delete all medical records older than year 2024
-                            12. Show the patient with most medical records
-                            13. Show the date when most patients were admitted
-                            14. Show the name and the number of medications of each patient
-                            15. Exit
+                            8. Delete the last medication of the patient's last record
+                            9. Show the doctors that treated a specific patient
+                            10. Append a new prescription to a patient's last record
+                            11. Get all prescribed medication (name + dosage) from a specific patient
+                            12. Import data to MongoDB
+                            13. Exit
                             """);
 
                     int choice = sc.nextInt();
@@ -94,8 +89,8 @@ public class MainHospital {
                             saveMedicalRecordWithPrescription.saveMedicalRecordWithPrescription();
                             break;
                         case 8:
-                            GetTotalAmountPaidByPatient getTotalAmountPaidByPatient = container.select(GetTotalAmountPaidByPatient.class).get();
-                            getTotalAmountPaidByPatient.getTotalAmountPaidByPatient();
+                            DeleteLastMedicationFromLastRecord deleteLastMedicationFromLastRecord = container.select(DeleteLastMedicationFromLastRecord.class).get();
+                            deleteLastMedicationFromLastRecord.deleteMedication();
                             break;
                         case 9:
                             System.out.println("Loading...");
@@ -103,30 +98,20 @@ public class MainHospital {
                             getDoctorsWhoTreatedOnePatient.getAllRecordsByPatient();
                             break;
                         case 10:
-                            SaveNewPrescription saveNewPrescription = container.select(SaveNewPrescription.class).get();
-                            saveNewPrescription.saveNewPrescription();
+                            SaveNewPrescriptionToLastMedicalRecord saveNewPrescriptionToLastMedicalRecord = container.select(SaveNewPrescriptionToLastMedicalRecord.class).get();
+                            saveNewPrescriptionToLastMedicalRecord.saveNewPrescription();
                             break;
                         case 11:
                             System.out.println("Loading...");
-                            DeleteRecordsOlderThan2024 deleteRecordsOlderThan2024 = container.select(DeleteRecordsOlderThan2024.class).get();
-                            deleteRecordsOlderThan2024.deleteRecordsOlderThan2024();
+                            GetMedicationFromSpecificPatient getMedicationFromSpecificPatient = container.select(GetMedicationFromSpecificPatient.class).get();
+                            getMedicationFromSpecificPatient.getMedicationFromSpecificPatient();
                             break;
                         case 12:
                             System.out.println("Loading...");
-                            GetPatientWithMostMedicalRecords getPatientWithMostMedicalRecords = container.select(GetPatientWithMostMedicalRecords.class).get();
-                            getPatientWithMostMedicalRecords.getPatientWithMostMedicalRecords();
+                            ImportDataToMongo importDataToMongo = container.select(ImportDataToMongo.class).get();
+                            importDataToMongo.importDataToMongo();
                             break;
                         case 13:
-                            System.out.println("Loading...");
-                            GetDateWithMostAdmissions getDateWithMostAdmissions = container.select(GetDateWithMostAdmissions.class).get();
-                            getDateWithMostAdmissions.getDateWithMostAdmissions();
-                            break;
-                        case 14:
-                            System.out.println("Loading...");
-                            GetNameAndMedicationNumOfEachPatient getNameAndMedicationNumOfEachPatient = container.select(GetNameAndMedicationNumOfEachPatient.class).get();
-                            getNameAndMedicationNumOfEachPatient.getNameAndMedicationNumOfEachPatient();
-                            break;
-                        case 15:
                             exit = true;
                             break;
                         default:

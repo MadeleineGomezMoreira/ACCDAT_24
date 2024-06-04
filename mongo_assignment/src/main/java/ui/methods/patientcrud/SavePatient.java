@@ -44,14 +44,12 @@ public class SavePatient {
         System.out.println("Enter the password of the patientEntity's account: ");
         password = sc.nextLine();
 
-        PatientEntity patientEntity = new PatientEntity(0, name, birthDateLocal, phone);
-        CredentialEntity credentialEntity = new CredentialEntity(0, username, password, patientEntity);
+        CredentialEntity credentialEntity = new CredentialEntity(0, username, password);
         Patient patient = Patient.builder()
                 .name(name)
                 .birthDate(birthDateLocal)
                 .phone(phone)
                 .build();
-        patientEntity.setCredential(credentialEntity);
 
         patientService.savePatient(patient, credentialEntity)
                 .peek(i -> System.out.println("PatientEntity saved successfully!"))
