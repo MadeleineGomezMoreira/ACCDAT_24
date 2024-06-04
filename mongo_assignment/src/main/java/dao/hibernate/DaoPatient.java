@@ -1,19 +1,19 @@
 package dao.hibernate;
 
 import io.vavr.control.Either;
-import model.Patient;
+import model.hibernate.PatientEntity;
 import model.error.AppError;
 
 import java.util.List;
 
 public interface DaoPatient {
-    Either<AppError, List<Patient>> getAll();
+    Either<AppError, List<PatientEntity>> getAll();
 
-    Either<AppError, Patient> get(Patient patient);
+    Either<AppError, PatientEntity> get(PatientEntity patientEntity);
 
-    Either<AppError, Integer> save(Patient patient);
+    Either<AppError, Integer> save(PatientEntity patientEntity);
 
-    Either<AppError, Integer> update(Patient patient);
+    Either<AppError, Integer> update(PatientEntity patientEntity);
 
-    Either<AppError, Integer> delete(Patient patient, Boolean confirmation);
+    Either<AppError, Integer> delete(PatientEntity patientEntity, Boolean confirmation);
 }

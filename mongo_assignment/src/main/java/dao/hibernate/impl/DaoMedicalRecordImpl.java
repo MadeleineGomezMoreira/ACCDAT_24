@@ -9,8 +9,8 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.Query;
-import model.MedicalRecord;
-import model.PrescribedMedication;
+import model.hibernate.MedicalRecordEntity;
+import model.hibernate.PrescribedMedicationEntity;
 import model.error.AppError;
 
 import java.util.List;
@@ -27,16 +27,16 @@ public class DaoMedicalRecordImpl implements DaoMedicalRecord {
 
     //get all medical records
     @Override
-    public Either<AppError, List<MedicalRecord>> getAll() {
-        Either<AppError, List<MedicalRecord>> result;
+    public Either<AppError, List<MedicalRecordEntity>> getAll() {
+        Either<AppError, List<MedicalRecordEntity>> result;
         em = jpaUtil.getEntityManager();
         try {
-            List<MedicalRecord> medicalRecords = em.createQuery(HqlQueries.GET_ALL_MEDICAL_RECORDS_HQL, MedicalRecord.class).getResultList();
+            List<MedicalRecordEntity> medicalRecordEntities = em.createQuery(HqlQueries.GET_ALL_MEDICAL_RECORDS_HQL, MedicalRecordEntity.class).getResultList();
 
-            if (medicalRecords.isEmpty()) {
+            if (medicalRecordEntities.isEmpty()) {
                 result = Either.left(new AppError(Constants.DATA_RETRIEVAL_ERROR_NOT_FOUND));
             } else {
-                result = Either.right(medicalRecords);
+                result = Either.right(medicalRecordEntities);
             }
         } catch (Exception e) {
             result = Either.left(new AppError(e.getMessage()));
@@ -48,17 +48,17 @@ public class DaoMedicalRecordImpl implements DaoMedicalRecord {
 
     //get all medical records by patient
     @Override
-    public Either<AppError, List<MedicalRecord>> getAll(MedicalRecord medicalRecord) {
-        Either<AppError, List<MedicalRecord>> result;
+    public Either<AppError, List<MedicalRecordEntity>> getAll(MedicalRecordEntity medicalRecordEntity) {
+        Either<AppError, List<MedicalRecordEntity>> result;
         em = jpaUtil.getEntityManager();
         try {
-            List<MedicalRecord> medicalRecords = em.createQuery(HqlQueries.GET_ALL_MEDICAL_RECORDS_BY_PATIENT_ID_HQL, MedicalRecord.class).setParameter(Constants.ID, medicalRecord.getPatientId()).getResultList();
+            List<MedicalRecordEntity> medicalRecordEntities = em.createQuery(HqlQueries.GET_ALL_MEDICAL_RECORDS_BY_PATIENT_ID_HQL, MedicalRecordEntity.class).setParameter(Constants.ID, medicalRecordEntity.getPatientId()).getResultList();
 
-            if (medicalRecords.isEmpty()) {
+            if (medicalRecordEntities.isEmpty()) {
                 result = Either.left(new AppError(Constants.DATA_RETRIEVAL_ERROR_NOT_FOUND));
             } else {
-                medicalRecords.forEach(mr -> mr.getPrescribedMedication().size());
-                result = Either.right(medicalRecords);
+                medicalRecordEntities.forEach(mr -> mr.getPrescribedMedication().size());
+                result = Either.right(medicalRecordEntities);
             }
         } catch (Exception e) {
             result = Either.left(new AppError(e.getMessage()));
@@ -69,17 +69,17 @@ public class DaoMedicalRecordImpl implements DaoMedicalRecord {
     }
 
     @Override
-    public Either<AppError, MedicalRecord> get(MedicalRecord medicalRecord) {
-        Either<AppError, MedicalRecord> result;
+    public Either<AppError, MedicalRecordEntity> get(MedicalRecordEntity medicalRecordEntity) {
+        Either<AppError, MedicalRecordEntity> result;
         em = jpaUtil.getEntityManager();
 
         try {
-            MedicalRecord medicalRecordFound = em.find(MedicalRecord.class, medicalRecord.getId());
-            if (medicalRecordFound == null) {
-                medicalRecord.getPrescribedMedication().size();
+            MedicalRecordEntity medicalRecordEntityFound = em.find(MedicalRecordEntity.class, medicalRecordEntity.getId());
+            if (medicalRecordEntityFound == null) {
+                medicalRecordEntity.getPrescribedMedication().size();
                 result = Either.left(new AppError(Constants.DATA_RETRIEVAL_ERROR_NOT_FOUND_INCORRECT_ID));
             } else {
-                result = Either.right(medicalRecordFound);
+                result = Either.right(medicalRecordEntityFound);
             }
         } catch (Exception e) {
             result = Either.left(new AppError(e.getMessage()));
@@ -90,7 +90,7 @@ public class DaoMedicalRecordImpl implements DaoMedicalRecord {
     }
 
     @Override
-    public Either<AppError, Integer> save(MedicalRecord medicalRecord) {
+    public Either<AppError, Integer> save(MedicalRecordEntity medicalRecordEntity) {
         Either<AppError, Integer> result;
         em = jpaUtil.getEntityManager();
         EntityTransaction tx = em.getTransaction();
@@ -98,20 +98,20 @@ public class DaoMedicalRecordImpl implements DaoMedicalRecord {
         try {
             tx.begin();
 
-            MedicalRecord recordWithoutPrescriptions = new MedicalRecord(medicalRecord.getId(), medicalRecord.getAdmissionDate(), medicalRecord.getDiagnosis(), medicalRecord.getPatientId(), medicalRecord.getDoctorId());
-            List<PrescribedMedication> prescribedMedications = medicalRecord.getPrescribedMedication();
+            MedicalRecordEntity recordWithoutPrescriptions = new MedicalRecordEntity(medicalRecordEntity.getId(), medicalRecordEntity.getAdmissionDate(), medicalRecordEntity.getDiagnosis(), medicalRecordEntity.getPatientId(), medicalRecordEntity.getDoctorId());
+            List<PrescribedMedicationEntity> prescribedMedicationEntities = medicalRecordEntity.getPrescribedMedication();
 
             em.persist(recordWithoutPrescriptions);
             em.flush();
 
             int recordId = recordWithoutPrescriptions.getId();
-            prescribedMedications.forEach(prescribedMedication -> {
+            prescribedMedicationEntities.forEach(prescribedMedication -> {
                 prescribedMedication.setMedicalRecordId(recordId);
                 em.persist(prescribedMedication);
             });
 
             tx.commit();
-            result = Either.right(medicalRecord.getId());
+            result = Either.right(medicalRecordEntity.getId());
         } catch (Exception e) {
             assert tx != null;
             if (tx.isActive()) tx.rollback();

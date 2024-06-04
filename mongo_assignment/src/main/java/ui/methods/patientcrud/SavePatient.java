@@ -1,8 +1,9 @@
 package ui.methods.patientcrud;
 
 import jakarta.inject.Inject;
-import model.Credential;
-import model.Patient;
+import model.hibernate.CredentialEntity;
+import model.hibernate.PatientEntity;
+import model.mongo.Patient;
 import services.PatientService;
 
 import java.time.LocalDate;
@@ -27,28 +28,33 @@ public class SavePatient {
         String username;
         String password;
 
-        System.out.println("Enter the name of the patient: ");
+        System.out.println("Enter the name of the patientEntity: ");
         name = sc.nextLine();
 
-        System.out.println("Enter the birth date of the patient (yyyy-mm-dd): ");
+        System.out.println("Enter the birth date of the patientEntity (yyyy-mm-dd): ");
         birthDate = sc.nextLine();
         birthDateLocal = LocalDate.parse(birthDate);
 
-        System.out.println("Enter the phone number of the patient: ");
+        System.out.println("Enter the phone number of the patientEntity: ");
         phone = sc.nextLine();
 
-        System.out.println("Enter the username of the patient's account: ");
+        System.out.println("Enter the username of the patientEntity's account: ");
         username = sc.nextLine();
 
-        System.out.println("Enter the password of the patient's account: ");
+        System.out.println("Enter the password of the patientEntity's account: ");
         password = sc.nextLine();
 
-        Patient patient = new Patient(0, name, birthDateLocal, phone);
-        Credential credential = new Credential(0, username, password, patient);
-        patient.setCredential(credential);
+        PatientEntity patientEntity = new PatientEntity(0, name, birthDateLocal, phone);
+        CredentialEntity credentialEntity = new CredentialEntity(0, username, password, patientEntity);
+        Patient patient = Patient.builder()
+                .name(name)
+                .birthDate(birthDateLocal)
+                .phone(phone)
+                .build();
+        patientEntity.setCredential(credentialEntity);
 
-        patientService.savePatient(patient)
-                .peek(i -> System.out.println("Patient saved successfully!"))
+        patientService.savePatient(patient, credentialEntity)
+                .peek(i -> System.out.println("PatientEntity saved successfully!"))
                 .peekLeft(e -> System.out.println("ERROR: " + e.getMessage()));
 
     }

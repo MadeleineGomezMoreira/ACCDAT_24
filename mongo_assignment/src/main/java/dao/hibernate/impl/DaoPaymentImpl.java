@@ -7,7 +7,7 @@ import dao.hibernate.connection.JPAUtil;
 import io.vavr.control.Either;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
-import model.Payment;
+import model.hibernate.PaymentEntity;
 import model.error.AppError;
 
 import java.util.List;
@@ -23,16 +23,16 @@ public class DaoPaymentImpl implements DaoPayment {
     }
 
     @Override
-    public Either<AppError, List<Payment>> getAll() {
-        Either<AppError, List<Payment>> result;
+    public Either<AppError, List<PaymentEntity>> getAll() {
+        Either<AppError, List<PaymentEntity>> result;
         em = jpaUtil.getEntityManager();
         try {
-            List<Payment> payments = em.createQuery(HqlQueries.GET_ALL_PAYMENTS_HQL, Payment.class).getResultList();
+            List<PaymentEntity> paymentEntities = em.createQuery(HqlQueries.GET_ALL_PAYMENTS_HQL, PaymentEntity.class).getResultList();
 
-            if (payments.isEmpty()) {
+            if (paymentEntities.isEmpty()) {
                 result = Either.left(new AppError(Constants.DATA_RETRIEVAL_ERROR_NOT_FOUND));
             } else {
-                result = Either.right(payments);
+                result = Either.right(paymentEntities);
             }
         } catch (Exception e) {
             result = Either.left(new AppError(e.getMessage()));

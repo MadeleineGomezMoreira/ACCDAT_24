@@ -8,7 +8,7 @@ import io.vavr.control.Either;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
-import model.Patient;
+import model.hibernate.PatientEntity;
 import model.error.AppError;
 import org.hibernate.exception.ConstraintViolationException;
 
@@ -25,16 +25,16 @@ public class DaoPatientImpl implements DaoPatient {
     }
 
     @Override
-    public Either<AppError, List<Patient>> getAll() {
-        Either<AppError, List<Patient>> result;
+    public Either<AppError, List<PatientEntity>> getAll() {
+        Either<AppError, List<PatientEntity>> result;
         em = jpaUtil.getEntityManager();
         try {
-            List<Patient> patients = em.createQuery(HqlQueries.GET_ALL_PATIENTS_HQL, Patient.class).getResultList();
+            List<PatientEntity> patientEntities = em.createQuery(HqlQueries.GET_ALL_PATIENTS_HQL, PatientEntity.class).getResultList();
 
-            if (patients.isEmpty()) {
+            if (patientEntities.isEmpty()) {
                 result = Either.left(new AppError(Constants.DATA_RETRIEVAL_ERROR_NOT_FOUND));
             } else {
-                result = Either.right(patients);
+                result = Either.right(patientEntities);
             }
         } catch (Exception e) {
             result = Either.left(new AppError(e.getMessage()));
@@ -45,16 +45,16 @@ public class DaoPatientImpl implements DaoPatient {
     }
 
     @Override
-    public Either<AppError, Patient> get(Patient patient) {
-        Either<AppError, Patient> result;
+    public Either<AppError, PatientEntity> get(PatientEntity patientEntity) {
+        Either<AppError, PatientEntity> result;
         em = jpaUtil.getEntityManager();
 
         try {
-            Patient patientFound = em.find(Patient.class, patient.getId());
-            if (patientFound == null) {
+            PatientEntity patientEntityFound = em.find(PatientEntity.class, patientEntity.getId());
+            if (patientEntityFound == null) {
                 result = Either.left(new AppError(Constants.DATA_RETRIEVAL_ERROR_NOT_FOUND_INCORRECT_ID));
             } else {
-                result = Either.right(patientFound);
+                result = Either.right(patientEntityFound);
             }
         } catch (Exception e) {
             result = Either.left(new AppError(e.getMessage()));
@@ -65,16 +65,16 @@ public class DaoPatientImpl implements DaoPatient {
     }
 
     @Override
-    public Either<AppError, Integer> save(Patient patient) {
+    public Either<AppError, Integer> save(PatientEntity patientEntity) {
         Either<AppError, Integer> result;
 
-        //we will save both the patient and its credential here :)
+        //we will save both the patientEntity and its credential here :)
 
         em = jpaUtil.getEntityManager();
         EntityTransaction tx = em.getTransaction();
         try {
             tx.begin();
-            em.persist(patient);
+            em.persist(patientEntity);
             tx.commit();
             result = Either.right(1);
         } catch (Exception e) {
@@ -88,19 +88,19 @@ public class DaoPatientImpl implements DaoPatient {
     }
 
     @Override
-    public Either<AppError, Integer> update(Patient patient) {
+    public Either<AppError, Integer> update(PatientEntity patientEntity) {
         Either<AppError, Integer> result;
         em = jpaUtil.getEntityManager();
         EntityTransaction tx = em.getTransaction();
 
         try {
             tx.begin();
-            //we will check if the patient exists first (cause if not, 'merge' will create it)
-            Patient existingPatient = em.find(Patient.class, patient.getId());
-            if (existingPatient == null) {
+            //we will check if the patientEntity exists first (cause if not, 'merge' will create it)
+            PatientEntity existingPatientEntity = em.find(PatientEntity.class, patientEntity.getId());
+            if (existingPatientEntity == null) {
                 result = Either.left(new AppError(Constants.DATA_RETRIEVAL_ERROR_NOT_FOUND_INCORRECT_ID));
             } else {
-                em.merge(patient);
+                em.merge(patientEntity);
                 tx.commit();
                 result = Either.right(1);
             }
@@ -115,7 +115,7 @@ public class DaoPatientImpl implements DaoPatient {
     }
 
     @Override
-    public Either<AppError, Integer> delete(Patient patient, Boolean confirmation) {
+    public Either<AppError, Integer> delete(PatientEntity patientEntity, Boolean confirmation) {
         Either<AppError, Integer> result;
 
         em = jpaUtil.getEntityManager();
@@ -123,7 +123,7 @@ public class DaoPatientImpl implements DaoPatient {
 
         try {
 
-            int patientId = patient.getId();
+            int patientId = patientEntity.getId();
             tx.begin();
 
             //if unconfirmed, try to delete all but appointments
@@ -141,7 +141,7 @@ public class DaoPatientImpl implements DaoPatient {
             em.createQuery(HqlQueries.DELETE_MEDICAL_RECORDS_BY_PATIENT_ID_HQL).setParameter(Constants.ID, patientId).executeUpdate();
             //delete credential
             em.createQuery(HqlQueries.DELETE_CREDENTIAL_BY_PATIENT_ID_HQL).setParameter(Constants.ID, patientId).executeUpdate();
-            //delete patient
+            //delete patientEntity
             em.createQuery(HqlQueries.DELETE_PATIENT_BY_ID_HQL).setParameter(Constants.ID, patientId).executeUpdate();
             tx.commit();
 
@@ -150,7 +150,7 @@ public class DaoPatientImpl implements DaoPatient {
             assert tx != null;
             if (tx.isActive()) tx.rollback();
             if (e instanceof ConstraintViolationException) {
-                result = Either.left(new AppError(Constants.PATIENT_STILL_HAS_APPOINTMENTS_ERROR));
+                result = Either.left(new AppError(Constants.PATIENT_STILL_HAS_MEDICAL_RECORDS_ERROR));
             } else {
                 result = Either.left(new AppError(Constants.PATIENT_DELETION_ERROR + e.getMessage()));
             }

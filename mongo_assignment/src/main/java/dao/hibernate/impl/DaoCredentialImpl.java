@@ -7,8 +7,8 @@ import dao.hibernate.connection.JPAUtil;
 import io.vavr.control.Either;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
-import model.Credential;
 import model.error.AppError;
+import model.hibernate.CredentialEntity;
 
 public class DaoCredentialImpl implements DaoCredential {
 
@@ -21,18 +21,36 @@ public class DaoCredentialImpl implements DaoCredential {
     }
 
     @Override
-    public Either<AppError, Credential> get(Credential credential) {
-        Either<AppError, Credential> result;
+    public Either<AppError, CredentialEntity> get(CredentialEntity credentialEntity) {
+        Either<AppError, CredentialEntity> result;
         em = jpaUtil.getEntityManager();
 
         try {
-            Credential credentialFound = em.createQuery(HqlQueries.GET_CREDENTIAL_BY_USERNAME_HQL, Credential.class).setParameter(Constants.USERNAME, credential.getUsername()).getSingleResult();
-            if (credentialFound == null) {
+            CredentialEntity credentialEntityFound = em.createQuery(HqlQueries.GET_CREDENTIAL_BY_USERNAME_HQL, CredentialEntity.class).setParameter(Constants.USERNAME, credentialEntity.getUsername()).getSingleResult();
+            if (credentialEntityFound == null) {
                 result = Either.left(new AppError(Constants.DATA_RETRIEVAL_ERROR_NOT_FOUND_INCORRECT_ID));
             } else {
-                result = Either.right(credentialFound);
+                result = Either.right(credentialEntityFound);
             }
         } catch (Exception e) {
+            result = Either.left(new AppError(e.getMessage()));
+        } finally {
+            em.close();
+        }
+        return result;
+    }
+
+    @Override
+    public Either<AppError, Integer> save(CredentialEntity credentialEntity) {
+        Either<AppError, Integer> result;
+        em = jpaUtil.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(credentialEntity);
+            em.getTransaction().commit();
+            result = Either.right(1);
+        } catch (Exception e) {
+            em.getTransaction().rollback();
             result = Either.left(new AppError(e.getMessage()));
         } finally {
             em.close();

@@ -4,13 +4,13 @@
              version="2.0">
 
     <persistence-unit name="hospitalPU">
-        <class>model.Patient</class>
-        <class>model.Credential</class>
-        <class>model.Doctor</class>
-        <class>model.Payment</class>
-        <class>model.Appointment</class>
-        <class>model.MedicalRecord</class>
-        <class>model.PrescribedMedication</class>
+        <class>model.hibernate.PatientEntity</class>
+        <class>model.hibernate.CredentialEntity</class>
+        <class>model.hibernate.DoctorEntity</class>
+        <class>model.hibernate.PaymentEntity</class>
+        <class>model.hibernate.AppointmentEntity</class>
+        <class>model.hibernate.MedicalRecordEntity</class>
+        <class>model.hibernate.PrescribedMedicationEntity</class>
         <properties>
             <property name="jakarta.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <property name="jakarta.persistence.jdbc.url"

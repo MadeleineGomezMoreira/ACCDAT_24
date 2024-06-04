@@ -3,6 +3,8 @@ package model.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import model.mongo.MedicalRecord;
+import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,13 +13,13 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PatientWithRecordsDTO {
-    private int patientId;
+    private ObjectId patientId;
     private List<MedicalRecordDTO> medicalRecords = new ArrayList<>();
 
     @Override
     public String toString() {
         return "\n" + "--PATIENT--" +
-                "\n" + "Patient Id: " + patientId +
+                "\n" + "PatientEntity Id: " + patientId +
                 "\n" + "Medical records: " + medicalRecords;
     }
 }

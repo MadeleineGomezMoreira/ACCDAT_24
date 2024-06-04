@@ -6,7 +6,7 @@ import dao.hibernate.connection.JPAUtil;
 import io.vavr.control.Either;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
-import model.Doctor;
+import model.hibernate.DoctorEntity;
 import model.error.AppError;
 
 public class DaoDoctorImpl implements DaoDoctor {
@@ -20,16 +20,16 @@ public class DaoDoctorImpl implements DaoDoctor {
     }
 
     @Override
-    public Either<AppError, Doctor> get(Doctor doctor) {
-        Either<AppError, Doctor> result;
+    public Either<AppError, DoctorEntity> get(DoctorEntity doctorEntity) {
+        Either<AppError, DoctorEntity> result;
         em = jpaUtil.getEntityManager();
 
         try {
-            Doctor doctorFound = em.find(Doctor.class, doctor.getId());
-            if (doctorFound == null) {
+            DoctorEntity doctorEntityFound = em.find(DoctorEntity.class, doctorEntity.getId());
+            if (doctorEntityFound == null) {
                 result = Either.left(new AppError(Constants.DATA_RETRIEVAL_ERROR_NOT_FOUND_INCORRECT_ID));
             } else {
-                result = Either.right(doctorFound);
+                result = Either.right(doctorEntityFound);
             }
         } catch (Exception e) {
             result = Either.left(new AppError(e.getMessage()));

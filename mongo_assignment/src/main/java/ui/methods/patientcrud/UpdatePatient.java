@@ -1,10 +1,15 @@
 package ui.methods.patientcrud;
 
+import common.Constants;
+import io.vavr.control.Either;
 import jakarta.inject.Inject;
-import model.Patient;
+import model.error.AppError;
+import model.mongo.Patient;
+import org.bson.types.ObjectId;
 import services.PatientService;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class UpdatePatient {
@@ -19,30 +24,46 @@ public class UpdatePatient {
     public void updatePatient() {
         Scanner sc = new Scanner(System.in);
 
-        int id;
         String name;
         String birthDate;
         String phone;
         LocalDate birthDateLocal;
 
-        System.out.println("Please enter the ID of the patient you want to update:");
-        id = sc.nextInt();
-        sc.nextLine();
+        Either<AppError, HashMap<Integer, ObjectId>> allPatientsIDs = patientService.getAllPatientsIDs();
 
-        System.out.println("Please enter the new name:");
-        name = sc.nextLine();
+        if (allPatientsIDs.isRight()) {
+            allPatientsIDs.get().forEach((key, value) -> System.out.println(key + " - " + value));
 
-        System.out.println("Please enter the new birth date: (YYYY-MM-DD)");
-        birthDate = sc.nextLine();
-        birthDateLocal = LocalDate.parse(birthDate);
+            System.out.println("Enter the patient's id: (select the number associated to its object Id)");
+            int id = sc.nextInt();
+            sc.nextLine();
 
-        System.out.println("Please enter the new phone number:");
-        phone = sc.nextLine();
+            ObjectId objectId = allPatientsIDs.get().get(id);
 
-        patientService.updatePatient(new Patient(id, name, birthDateLocal, phone))
-                .peek(i -> System.out.println("Patient updated successfully!"))
-                .peekLeft(appError -> System.out.println("ERROR: " + appError.getMessage()));
+            System.out.println("Please enter the new name:");
+            name = sc.nextLine();
+
+            System.out.println("Please enter the new birth date: (YYYY-MM-DD)");
+            birthDate = sc.nextLine();
+            birthDateLocal = LocalDate.parse(birthDate);
+
+            System.out.println("Please enter the new phone number:");
+            phone = sc.nextLine();
+
+            //new Patient(id, name, birthDateLocal, phone)
+
+            patientService.updatePatient(Patient.builder()
+                            .patientId(objectId)
+                            .name(name)
+                            .birthDate(birthDateLocal)
+                            .phone(phone)
+                            .build())
+                    .peek(i -> System.out.println("Patient updated successfully!"))
+                    .peekLeft(appError -> System.out.println("ERROR: " + appError.getMessage()));
 
 
+        } else {
+            System.out.println(Constants.ERROR + allPatientsIDs.getLeft().getMessage());
+        }
     }
 }

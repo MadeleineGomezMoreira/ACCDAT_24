@@ -3,6 +3,7 @@ package model.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.bson.types.ObjectId;
 
 import java.time.LocalDate;
 
@@ -11,17 +12,15 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class MedicalRecordDTO {
 
-    private int id;
     private LocalDate admissionDate;
     private String diagnosis;
-    private int doctorId;
+    private ObjectId doctorId;
 
     @Override
     public String toString() {
         return "\n" + "--MEDICAL RECORD--" +
-                "\n" + "Id: " + id +
                 "\n" + "Date of admission: " + admissionDate +
                 "\n" + "Diagnosis: " + diagnosis +
-                "\n" + "Doctor id: " + doctorId;
+                "\n" + "DoctorEntity id: " + doctorId;
     }
 }

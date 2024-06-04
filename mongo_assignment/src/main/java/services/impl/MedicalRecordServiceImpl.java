@@ -1,50 +1,49 @@
 package services.impl;
 
 import dao.hibernate.DaoMedicalRecord;
+import dao.mongo.DaoMedicalRecordMongo;
 import io.vavr.control.Either;
-import jakarta.inject.Inject;
-import model.MedicalRecord;
+import jakarta.inject.Inject;;
 import model.dto.MedicalRecordDTO;
 import model.dto.PatientWithRecordsDTO;
 import model.error.AppError;
+import model.mongo.MedicalRecord;
+import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 
 public class MedicalRecordServiceImpl implements services.MedicalRecordService {
 
     private final DaoMedicalRecord daoMedicalRecord;
+    private final DaoMedicalRecordMongo daoMedicalRecordMongo;
 
     @Inject
-    public MedicalRecordServiceImpl(DaoMedicalRecord daoMedicalRecord) {
+    public MedicalRecordServiceImpl(DaoMedicalRecord daoMedicalRecord, DaoMedicalRecordMongo daoMedicalRecordMongo) {
         this.daoMedicalRecord = daoMedicalRecord;
+        this.daoMedicalRecordMongo = daoMedicalRecordMongo;
     }
 
     @Override
-    public Either<AppError, List<PatientWithRecordsDTO>> getRecordsByPatient() {
+    public Either<AppError, List<PatientWithRecordsDTO>> getAllRecordsByPatient() {
         Either<AppError, List<PatientWithRecordsDTO>> result;
 
-        Either<AppError, List<MedicalRecord>> records = daoMedicalRecord.getAll();
+        Either<AppError, HashMap<ObjectId, List<MedicalRecord>>> recordsByPatient = daoMedicalRecordMongo.getAll();
 
-        if (records.isLeft()) {
-            result = Either.left(records.getLeft());
+        if (recordsByPatient.isLeft()) {
+            result = Either.left(recordsByPatient.getLeft());
         } else {
 
-            List<MedicalRecord> medicalRecords = records.get();
+            HashMap<ObjectId, List<MedicalRecord>> medicalRecordEntities = recordsByPatient.get();
             List<PatientWithRecordsDTO> patientsWithRecordsList = new ArrayList<>();
 
-            //we have to order the medical records by patientId and put them into the PatientWithRecordsDTO
-            medicalRecords.stream()
-                    .sorted(Comparator.comparingInt(MedicalRecord::getPatientId))
-                    .forEach(medicalRecord -> {
-                        PatientWithRecordsDTO patientWithRecords = new PatientWithRecordsDTO();
-                        patientWithRecords.setPatientId(medicalRecord.getPatientId());
-                        List<MedicalRecordDTO> medRecords = patientWithRecords.getMedicalRecords();
-                        medRecords.add(new MedicalRecordDTO(medicalRecord.getId(), medicalRecord.getAdmissionDate(), medicalRecord.getDiagnosis(), medicalRecord.getDoctorId()));
-                        patientWithRecords.setMedicalRecords(medRecords);
-                        patientsWithRecordsList.add(patientWithRecords);
-                    });
+            medicalRecordEntities.forEach((key, value) -> {
+                PatientWithRecordsDTO patientWithRecordsDTO = new PatientWithRecordsDTO();
+                patientWithRecordsDTO.setPatientId(key);
+                patientWithRecordsDTO.setMedicalRecords(convertToDTO(value));
+                patientsWithRecordsList.add(patientWithRecordsDTO);
+            });
             result = Either.right(patientsWithRecordsList);
         }
         return result;
@@ -57,6 +56,18 @@ public class MedicalRecordServiceImpl implements services.MedicalRecordService {
 
     @Override
     public Either<AppError, Integer> save(MedicalRecord medicalRecord) {
-        return daoMedicalRecord.save(medicalRecord);
+        return daoMedicalRecordMongo.save(medicalRecord);
+    }
+
+    private List<MedicalRecordDTO> convertToDTO(List<MedicalRecord> medicalRecords) {
+        List<MedicalRecordDTO> medicalRecordDTOs = new ArrayList<>();
+        medicalRecords.forEach(medicalRecord -> {
+            MedicalRecordDTO medicalRecordDTO = new MedicalRecordDTO();
+            medicalRecordDTO.setDoctorId(medicalRecord.getDoctorId());
+            medicalRecordDTO.setDiagnosis(medicalRecord.getDiagnosis());
+            medicalRecordDTO.setAdmissionDate(medicalRecord.getAdmissionDate());
+            medicalRecordDTOs.add(medicalRecordDTO);
+        });
+        return medicalRecordDTOs;
     }
 }

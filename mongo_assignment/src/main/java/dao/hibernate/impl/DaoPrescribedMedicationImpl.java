@@ -8,7 +8,7 @@ import io.vavr.control.Either;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
-import model.PrescribedMedication;
+import model.hibernate.PrescribedMedicationEntity;
 import model.error.AppError;
 
 import java.util.List;
@@ -24,12 +24,12 @@ public class DaoPrescribedMedicationImpl implements DaoPrescribedMedication {
     }
 
     @Override
-    public Either<AppError, List<PrescribedMedication>> getAll() {
-        Either<AppError, List<PrescribedMedication>> result;
+    public Either<AppError, List<PrescribedMedicationEntity>> getAll() {
+        Either<AppError, List<PrescribedMedicationEntity>> result;
 
         em = jpaUtil.getEntityManager();
         try {
-            List<PrescribedMedication> records = em.createQuery(HqlQueries.GET_ALL_PRESCRIBED_MEDICATION_HQL, PrescribedMedication.class).getResultList();
+            List<PrescribedMedicationEntity> records = em.createQuery(HqlQueries.GET_ALL_PRESCRIBED_MEDICATION_HQL, PrescribedMedicationEntity.class).getResultList();
             result = Either.right(records);
         } catch (Exception e) {
             result = Either.left(new AppError(Constants.DATA_RETRIEVAL_ERROR_NOT_FOUND + e.getMessage()));
@@ -40,7 +40,7 @@ public class DaoPrescribedMedicationImpl implements DaoPrescribedMedication {
     }
 
     @Override
-    public Either<AppError, Integer> save(PrescribedMedication prescribedMedication) {
+    public Either<AppError, Integer> save(PrescribedMedicationEntity prescribedMedicationEntity) {
         Either<AppError, Integer> result;
 
         em = jpaUtil.getEntityManager();
@@ -49,7 +49,7 @@ public class DaoPrescribedMedicationImpl implements DaoPrescribedMedication {
 
             tx.begin();
 
-            em.persist(prescribedMedication);
+            em.persist(prescribedMedicationEntity);
             tx.commit();
 
             result = Either.right(1);

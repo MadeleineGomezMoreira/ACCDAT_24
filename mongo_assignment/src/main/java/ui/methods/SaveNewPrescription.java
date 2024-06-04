@@ -1,7 +1,7 @@
 package ui.methods;
 
 import jakarta.inject.Inject;
-import model.PrescribedMedication;
+import model.hibernate.PrescribedMedicationEntity;
 import services.PrescribedMedicationService;
 
 import java.util.Scanner;
@@ -29,7 +29,7 @@ public class SaveNewPrescription {
         System.out.println("Please enter the dose of the medication (XXXmg/gr):");
         String dose = sc.nextLine();
 
-        prescribedMedicationService.save(new PrescribedMedication(0, name, dose, medicalRecordId))
+        prescribedMedicationService.save(new PrescribedMedicationEntity(0, name, dose, medicalRecordId))
                 .peek(prescribedMedication -> System.out.println("Prescribed medication saved successfully!"))
                 .peekLeft(error -> System.out.println("ERROR: " + error.getMessage()));
     }

@@ -7,9 +7,9 @@ import model.error.AppError;
 import services.LoginService;
 import ui.methods.*;
 import ui.methods.patientcrud.*;
-import ui.methods.queries.GetDateWithMostAdmissions;
-import ui.methods.queries.GetNameAndMedicationNumOfEachPatient;
-import ui.methods.queries.GetPatientWithMostMedicalRecords;
+import ui.methods.aggregations.GetDateWithMostAdmissions;
+import ui.methods.aggregations.GetNameAndMedicationNumOfEachPatient;
+import ui.methods.aggregations.GetPatientWithMostMedicalRecords;
 
 import java.util.Scanner;
 
@@ -86,8 +86,8 @@ public class MainHospital {
                             break;
                         case 6:
                             System.out.println("Loading...");
-                            ShowRecordsWithMedication showRecordsWithMedication = container.select(ShowRecordsWithMedication.class).get();
-                            showRecordsWithMedication.showRecordsWithMedication();
+                            ShowRecordsByPatient showRecordsByPatient = container.select(ShowRecordsByPatient.class).get();
+                            showRecordsByPatient.showRecordsWithMedication();
                             break;
                         case 7:
                             SaveMedicalRecordWithPrescription saveMedicalRecordWithPrescription = container.select(SaveMedicalRecordWithPrescription.class).get();
@@ -99,8 +99,8 @@ public class MainHospital {
                             break;
                         case 9:
                             System.out.println("Loading...");
-                            GetAllMedicalRecordsByPatient getAllMedicalRecordsByPatient = container.select(GetAllMedicalRecordsByPatient.class).get();
-                            getAllMedicalRecordsByPatient.getAllRecordsByPatient();
+                            GetDoctorsWhoTreatedOnePatient getDoctorsWhoTreatedOnePatient = container.select(GetDoctorsWhoTreatedOnePatient.class).get();
+                            getDoctorsWhoTreatedOnePatient.getAllRecordsByPatient();
                             break;
                         case 10:
                             SaveNewPrescription saveNewPrescription = container.select(SaveNewPrescription.class).get();

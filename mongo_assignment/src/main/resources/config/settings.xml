@@ -6,5 +6,9 @@
   <entry key="password">1234</entry>
   <entry key="driver">com.mysql.cj.jdbc.Driver</entry>
   <entry key="pathXML">data/file.xml</entry>
+  <entry key="mongoClient">mongodb://localhost:27017</entry>
+  <entry key="mongoDB">madegomezmoreira_hospital</entry>
+  <entry key="patientsCol">patients</entry>
+  <entry key="doctorsCol">doctors</entry>
 </properties>
 

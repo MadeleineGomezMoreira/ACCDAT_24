@@ -4,8 +4,10 @@ import common.Constants;
 import io.vavr.control.Either;
 import jakarta.inject.Inject;
 import model.error.AppError;
+import org.bson.types.ObjectId;
 import services.PatientService;
 
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class DeletePatient {
@@ -19,34 +21,43 @@ public class DeletePatient {
     public void deletePatient() {
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("Enter the ID of the patient you would like to delete: ");
-        int patientId = sc.nextInt();
-        sc.nextLine();
+        Either<AppError, HashMap<Integer, ObjectId>> allPatientsIDs = patientService.getAllPatientsIDs();
 
+        if (allPatientsIDs.isRight()) {
+            allPatientsIDs.get().forEach((key, value) -> System.out.println(key + " - " + value));
 
-        Either<AppError, Integer> result = patientService.deletePatient(patientId, false);
+            System.out.println("Enter the patient's id: (select the number associated to its object Id)");
+            int id = sc.nextInt();
+            sc.nextLine();
 
-        if (result.isRight()) {
-            System.out.println("Patient deleted successfully!");
-        } else {
-            String errorMessage = result.getLeft().getMessage();
+            ObjectId objectId = allPatientsIDs.get().get(id);
 
-            if (errorMessage.equals(Constants.PATIENT_STILL_HAS_APPOINTMENTS_ERROR)) {
-                System.out.println(Constants.APPOINTMENT_DELETION_QUESTION_ERROR);
-                String answer = sc.nextLine();
+            Either<AppError, Integer> result = patientService.deletePatient(objectId, false);
 
-                if (answer.equalsIgnoreCase("Y")) {
-                    patientService.deletePatient(patientId, true);
-                    System.out.println("Patient deleted successfully!");
-                } else {
-                    System.out.println("Patient was not deleted. Operation canceled.");
-                }
+            if (result.isRight()) {
+                System.out.println("PatientEntity deleted successfully!");
             } else {
-                System.out.println("An error occurred: " + errorMessage);
+                String errorMessage = result.getLeft().getMessage();
+
+                if (errorMessage.equals(Constants.PATIENT_STILL_HAS_MEDICAL_RECORDS_ERROR)) {
+                    System.out.println(Constants.APPOINTMENT_DELETION_QUESTION_ERROR);
+                    String answer = sc.nextLine();
+
+                    if (answer.equalsIgnoreCase("Y")) {
+                        patientService.deletePatient(objectId, true);
+                        System.out.println("PatientEntity deleted successfully!");
+                    } else {
+                        System.out.println("PatientEntity was not deleted. Operation canceled.");
+                    }
+                } else {
+                    System.out.println("An error occurred: " + errorMessage);
+                }
+
             }
 
+        } else {
+            System.out.println(Constants.ERROR + allPatientsIDs.getLeft().getMessage());
         }
-
 
     }
 }
