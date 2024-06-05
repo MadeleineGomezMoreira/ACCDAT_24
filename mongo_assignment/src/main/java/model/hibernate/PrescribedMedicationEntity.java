@@ -10,10 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "prescribed_medication")
-@NamedQueries({
-        @NamedQuery(name = "DELETE_PRESCRIBED_MEDICATION_BY_PATIENT_ID_HQL",
-                query = "delete from PrescribedMedicationEntity where medicalRecordId in (select m.id from MedicalRecordEntity m where m.patientId = :patientId)"),
-})
 public class PrescribedMedicationEntity {
 
     @Id

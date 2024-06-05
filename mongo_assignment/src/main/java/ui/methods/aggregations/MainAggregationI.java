@@ -4,7 +4,7 @@ import jakarta.enterprise.inject.se.SeContainer;
 import jakarta.enterprise.inject.se.SeContainerInitializer;
 import services.impl.AggregationServiceImpl;
 
-public class MainAggregationI { //TODO: I'm not sure if this works, it returns many names (suspicious)
+public class MainAggregationI { //IT WORKS!
 
     public static void main(String[] args) {
         SeContainerInitializer initializer = SeContainerInitializer.newInstance();

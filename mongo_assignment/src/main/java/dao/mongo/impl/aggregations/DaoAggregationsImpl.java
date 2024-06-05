@@ -4,14 +4,15 @@ import com.google.gson.Gson;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.model.Field;
 import jakarta.inject.Inject;
+import model.dto.MedicalRecordWithAppointments;
 import model.mongo.MedicalRecord;
 import model.mongo.PrescribedMedication;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.*;
 
 import static com.mongodb.client.model.Accumulators.*;
 import static com.mongodb.client.model.Aggregates.*;
@@ -60,31 +61,62 @@ public class DaoAggregationsImpl implements dao.mongo.DaoAggregations {
         }
     }
 
-    //b. Get the medical records of a given patient
+    // Get the medical records of a given patient showing the name of the patient and the number of appointments
     @Override
-    public List<MedicalRecord> getB(String patientName) {
-        List<Document> mrDocuments = collectionPatients.aggregate(
-                asList(
-                        match(eq("name", patientName)),
-                        unwind("$medical_records"),
+    public List<MedicalRecordWithAppointments> getB() {
+        // First, get the number of appointments for the patient
+        List<Document> appointmentCountDocuments = collectionPatients.aggregate(
+                List.of(
                         project(
                                 fields(
-                                        computed("medical_records", "$medical_records")
+                                        exclude("_id"),
+                                        include("name"),
+                                        computed("number_of_appointments",
+                                                new Document("$size",
+                                                        new Document("$ifNull", List.of("$medical_records", List.of())))
+                                        )
                                 )
                         )
                 )
         ).into(new ArrayList<>());
-        if (mrDocuments.isEmpty()) {
-            return new ArrayList<>();
-        } else {
-            //convert every document to a MedicalRecord object and put it into a list
-            List<MedicalRecord> medicalRecords = new ArrayList<>();
-            for (Document mrDocument : mrDocuments) {
-                MedicalRecord medicalRecord = gson.fromJson(mrDocument.toJson(), MedicalRecord.class);
-                medicalRecords.add(medicalRecord);
-            }
-            return medicalRecords;
+
+        HashMap<String, Integer> appointmentCounts = new HashMap<>();
+        for (Document document : appointmentCountDocuments) {
+            appointmentCounts.put(document.getString("name"), document.getInteger("number_of_appointments"));
         }
+
+        //then we get the medical records of the patient
+        List<Document> mrDocuments = collectionPatients.aggregate(
+                List.of(
+                        unwind("$medical_records"),
+                        project(fields(
+                                include("medical_records"),
+                                computed("name", "$name")
+                        ))
+                )
+        ).into(new ArrayList<>());
+
+        List<MedicalRecordWithAppointments> medicalRecords = new ArrayList<>();
+        for (Document document : mrDocuments) {
+            Document medicalRecord = document.get("medical_records", Document.class);
+            if (medicalRecord != null) {
+                MedicalRecord mr = gson.fromJson(medicalRecord.toJson(), MedicalRecord.class);
+                String patientName = document.getString("name");
+                Integer numAppointments = appointmentCounts.get(patientName);
+                if (numAppointments == null) {
+                    numAppointments = 0;
+                }
+                medicalRecords.add(MedicalRecordWithAppointments.builder()
+                                .patientName(patientName)
+                                .appointmentNumber(numAppointments)
+                                .admissionDate(mr.getAdmissionDate())
+                                .diagnosis(mr.getDiagnosis())
+                                .doctorId(mr.getDoctorId())
+                        .build());
+            }
+        }
+
+        return medicalRecords;
     }
 
     //c. Get the number of medications of each patient

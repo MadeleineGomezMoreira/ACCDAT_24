@@ -28,13 +28,6 @@ public class PatientEntity {
     @JoinColumn(name = "id_patient")
     private List<MedicalRecordEntity> medicalRecords;
 
-    public PatientEntity(int id, String name, LocalDate birthDate, String phone) {
-        this.id = id;
-        this.name = name;
-        this.birthDate = birthDate;
-        this.phone = phone;
-    }
-
     @Override
     public String toString() {
         return "\n" + "--PATIENT--" +

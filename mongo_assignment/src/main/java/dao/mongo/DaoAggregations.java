@@ -1,5 +1,6 @@
 package dao.mongo;
 
+import model.dto.MedicalRecordWithAppointments;
 import model.mongo.MedicalRecord;
 import model.mongo.PrescribedMedication;
 
@@ -11,7 +12,7 @@ public interface DaoAggregations {
     String getA();
 
     //b. Get the medical records of a given patient
-    List<MedicalRecord> getB(String patientName);
+    List<MedicalRecordWithAppointments> getB();
 
     //c. Get the number of medications of each patient
     HashMap<String, Integer> getC();

@@ -14,14 +14,6 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "medical_records")
-@NamedQueries({
-        @NamedQuery(name = "DELETE_MEDICAL_RECORDS_BY_PATIENT_ID_HQL",
-                query = "delete from MedicalRecordEntity where patientId = :id"),
-        @NamedQuery(name = "GET_ADMISSION_DATE_WITH_MOST_PATIENTS_HQL",
-                query = "select admissionDate from MedicalRecordEntity group by admissionDate order by count(admissionDate) desc limit 1"),
-        @NamedQuery(name = "GET_PATIENT_ID_WITH_MOST_MEDICAL_RECORDS_HQL",
-                query = "select patientId from MedicalRecordEntity group by patientId order by count(patientId) desc limit 1"),
-})
 public class MedicalRecordEntity {
 
     @Id

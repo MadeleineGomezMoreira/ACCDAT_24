@@ -2,6 +2,7 @@ package services.impl;
 
 import dao.mongo.DaoAggregations;
 import jakarta.inject.Inject;
+import model.dto.MedicalRecordWithAppointments;
 import model.mongo.MedicalRecord;
 import model.mongo.PrescribedMedication;
 
@@ -21,8 +22,8 @@ public class AggregationServiceImpl {
         return daoAggregations.getA();
     }
 
-    public List<MedicalRecord> getB(String patientName){
-        return daoAggregations.getB(patientName);
+    public List<MedicalRecordWithAppointments> getB(){
+        return daoAggregations.getB();
     }
 
     public HashMap<String,Integer> getC(){
